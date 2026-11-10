@@ -1,4 +1,0 @@
-name         = "robi"
-github_owner = "kohanyirobert"
-cluster_name = "robi-eks"
-aws_profile  = "devops-csk2"
