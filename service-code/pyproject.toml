@@ -1,0 +1,8 @@
+[project]
+name = "hello"
+version = "1.0.0"
+description = "The CSK greeting service"
+requires-python = ">=3.13"
+dependencies = [
+    "flask>=3.1.3",
+]

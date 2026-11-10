@@ -1,0 +1,860 @@
+[
+ {
+  "type": "text",
+  "id": "title",
+  "x": 20,
+  "y": 10,
+  "text": "From \"Hello\" to \"Bye\": a code change and an infra change, each through its own pipeline",
+  "fontSize": 26
+ },
+ {
+  "type": "text",
+  "id": "sub",
+  "x": 20,
+  "y": 50,
+  "text": "<name> = your short name (robi)  \u00b7  <gh> = your GitHub user  \u00b7  numbers = the order you do things in",
+  "fontSize": 17,
+  "strokeColor": "#757575"
+ },
+ {
+  "type": "rectangle",
+  "id": "zs",
+  "x": 20,
+  "y": 90,
+  "width": 1150,
+  "height": 250,
+  "roundness": {
+   "type": 3
+  },
+  "backgroundColor": "#a5d8ff",
+  "fillStyle": "solid",
+  "strokeColor": "#4a9eed",
+  "strokeWidth": 1,
+  "opacity": 30
+ },
+ {
+  "type": "text",
+  "id": "zst",
+  "x": 36,
+  "y": 100,
+  "text": "GitHub: <gh>/service-code",
+  "fontSize": 20
+ },
+ {
+  "type": "rectangle",
+  "id": "s1",
+  "x": 40,
+  "y": 150,
+  "width": 250,
+  "height": 150,
+  "roundness": {
+   "type": 3
+  },
+  "backgroundColor": "#fff3bf",
+  "fillStyle": "solid",
+  "strokeColor": "#f59e0b",
+  "label": {
+   "text": "1  branch say-bye\napp.py: Hello \u2192 Bye\n(and test_app.py)\nuv version --bump minor\n1.0.0 \u2192 1.1.0",
+   "fontSize": 17
+  }
+ },
+ {
+  "type": "rectangle",
+  "id": "s2",
+  "x": 320,
+  "y": 150,
+  "width": 270,
+  "height": 150,
+  "roundness": {
+   "type": 3
+  },
+  "backgroundColor": "#a5d8ff",
+  "fillStyle": "solid",
+  "strokeColor": "#4a9eed",
+  "label": {
+   "text": "2  pull request\n.github/workflows/pr.yml\n\u2022 unittest\n\u2022 docker build (no push)",
+   "fontSize": 17
+  }
+ },
+ {
+  "type": "rectangle",
+  "id": "s2m",
+  "x": 620,
+  "y": 185,
+  "width": 120,
+  "height": 80,
+  "roundness": {
+   "type": 3
+  },
+  "backgroundColor": "#e9ecef",
+  "fillStyle": "solid",
+  "strokeColor": "#868e96",
+  "label": {
+   "text": "you\nmerge",
+   "fontSize": 17
+  }
+ },
+ {
+  "type": "rectangle",
+  "id": "s3",
+  "x": 770,
+  "y": 150,
+  "width": 380,
+  "height": 150,
+  "roundness": {
+   "type": 3
+  },
+  "backgroundColor": "#a5d8ff",
+  "fillStyle": "solid",
+  "strokeColor": "#4a9eed",
+  "label": {
+   "text": "3  push to main\n.github/workflows/main.yml\n\u2022 unittest\n\u2022 version=$(uv version --short)\n\u2022 docker build + push :1.1.0",
+   "fontSize": 17
+  }
+ },
+ {
+  "type": "arrow",
+  "id": "s1-s2",
+  "x": 290,
+  "y": 225,
+  "width": 30,
+  "height": 0,
+  "points": [
+   [
+    0,
+    0
+   ],
+   [
+    30,
+    0
+   ]
+  ],
+  "endArrowhead": "arrow",
+  "startBinding": {
+   "elementId": "s1",
+   "fixedPoint": [
+    1,
+    0.5
+   ]
+  },
+  "endBinding": {
+   "elementId": "s2",
+   "fixedPoint": [
+    0,
+    0.5
+   ]
+  }
+ },
+ {
+  "type": "arrow",
+  "id": "s2-s2m",
+  "x": 590,
+  "y": 225,
+  "width": 30,
+  "height": 0,
+  "points": [
+   [
+    0,
+    0
+   ],
+   [
+    30,
+    0
+   ]
+  ],
+  "endArrowhead": "arrow",
+  "startBinding": {
+   "elementId": "s2",
+   "fixedPoint": [
+    1,
+    0.5
+   ]
+  },
+  "endBinding": {
+   "elementId": "s2m",
+   "fixedPoint": [
+    0,
+    0.5
+   ]
+  }
+ },
+ {
+  "type": "arrow",
+  "id": "s2m-s3",
+  "x": 740,
+  "y": 225,
+  "width": 30,
+  "height": 0,
+  "points": [
+   [
+    0,
+    0
+   ],
+   [
+    30,
+    0
+   ]
+  ],
+  "endArrowhead": "arrow",
+  "startBinding": {
+   "elementId": "s2m",
+   "fixedPoint": [
+    1,
+    0.5
+   ]
+  },
+  "endBinding": {
+   "elementId": "s3",
+   "fixedPoint": [
+    0,
+    0.5
+   ]
+  }
+ },
+ {
+  "type": "rectangle",
+  "id": "zi",
+  "x": 20,
+  "y": 380,
+  "width": 1150,
+  "height": 250,
+  "roundness": {
+   "type": 3
+  },
+  "backgroundColor": "#d0bfff",
+  "fillStyle": "solid",
+  "strokeColor": "#8b5cf6",
+  "strokeWidth": 1,
+  "opacity": 30
+ },
+ {
+  "type": "text",
+  "id": "zit",
+  "x": 36,
+  "y": 390,
+  "text": "GitHub: <gh>/infra-code",
+  "fontSize": 20
+ },
+ {
+  "type": "rectangle",
+  "id": "i4",
+  "x": 40,
+  "y": 440,
+  "width": 250,
+  "height": 150,
+  "roundness": {
+   "type": 3
+  },
+  "backgroundColor": "#fff3bf",
+  "fillStyle": "solid",
+  "strokeColor": "#f59e0b",
+  "label": {
+   "text": "4  branch hello-1.1.0\nk8s/deployment.yaml\nimage: \u2026/hello:1.0.0\n\u2192 \u2026/hello:1.1.0",
+   "fontSize": 17
+  }
+ },
+ {
+  "type": "rectangle",
+  "id": "i5",
+  "x": 320,
+  "y": 440,
+  "width": 270,
+  "height": 150,
+  "roundness": {
+   "type": 3
+  },
+  "backgroundColor": "#d0bfff",
+  "fillStyle": "solid",
+  "strokeColor": "#8b5cf6",
+  "label": {
+   "text": "5  pull request\n.github/workflows/pr.yml\n\u2022 fmt -check, init\n\u2022 validate\n\u2022 plan",
+   "fontSize": 17
+  }
+ },
+ {
+  "type": "rectangle",
+  "id": "i5m",
+  "x": 620,
+  "y": 475,
+  "width": 120,
+  "height": 80,
+  "roundness": {
+   "type": 3
+  },
+  "backgroundColor": "#e9ecef",
+  "fillStyle": "solid",
+  "strokeColor": "#868e96",
+  "label": {
+   "text": "you\nmerge",
+   "fontSize": 17
+  }
+ },
+ {
+  "type": "rectangle",
+  "id": "i6",
+  "x": 770,
+  "y": 440,
+  "width": 380,
+  "height": 150,
+  "roundness": {
+   "type": 3
+  },
+  "backgroundColor": "#d0bfff",
+  "fillStyle": "solid",
+  "strokeColor": "#8b5cf6",
+  "label": {
+   "text": "6  push to main\n.github/workflows/main.yml\n\u2022 fmt -check, init\n\u2022 validate, plan\n\u2022 apply (no approval)",
+   "fontSize": 17
+  }
+ },
+ {
+  "type": "arrow",
+  "id": "i4-i5",
+  "x": 290,
+  "y": 515,
+  "width": 30,
+  "height": 0,
+  "points": [
+   [
+    0,
+    0
+   ],
+   [
+    30,
+    0
+   ]
+  ],
+  "endArrowhead": "arrow",
+  "startBinding": {
+   "elementId": "i4",
+   "fixedPoint": [
+    1,
+    0.5
+   ]
+  },
+  "endBinding": {
+   "elementId": "i5",
+   "fixedPoint": [
+    0,
+    0.5
+   ]
+  }
+ },
+ {
+  "type": "arrow",
+  "id": "i5-i5m",
+  "x": 590,
+  "y": 515,
+  "width": 30,
+  "height": 0,
+  "points": [
+   [
+    0,
+    0
+   ],
+   [
+    30,
+    0
+   ]
+  ],
+  "endArrowhead": "arrow",
+  "startBinding": {
+   "elementId": "i5",
+   "fixedPoint": [
+    1,
+    0.5
+   ]
+  },
+  "endBinding": {
+   "elementId": "i5m",
+   "fixedPoint": [
+    0,
+    0.5
+   ]
+  }
+ },
+ {
+  "type": "arrow",
+  "id": "i5m-i6",
+  "x": 740,
+  "y": 515,
+  "width": 30,
+  "height": 0,
+  "points": [
+   [
+    0,
+    0
+   ],
+   [
+    30,
+    0
+   ]
+  ],
+  "endArrowhead": "arrow",
+  "startBinding": {
+   "elementId": "i5m",
+   "fixedPoint": [
+    1,
+    0.5
+   ]
+  },
+  "endBinding": {
+   "elementId": "i6",
+   "fixedPoint": [
+    0,
+    0.5
+   ]
+  }
+ },
+ {
+  "type": "arrow",
+  "id": "s3-i4",
+  "x": 960,
+  "y": 300,
+  "width": 690,
+  "height": 140,
+  "points": [
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    40
+   ],
+   [
+    -690,
+    40
+   ],
+   [
+    -690,
+    140
+   ]
+  ],
+  "endArrowhead": "arrow",
+  "startBinding": {
+   "elementId": "s3",
+   "fixedPoint": [
+    0.5,
+    1
+   ]
+  },
+  "endBinding": {
+   "elementId": "i4",
+   "fixedPoint": [
+    0.94,
+    0
+   ]
+  },
+  "label": {
+   "text": "when 3 is green: the new tag",
+   "fontSize": 16
+  },
+  "strokeStyle": "dashed"
+ },
+ {
+  "type": "rectangle",
+  "id": "za",
+  "x": 1270,
+  "y": 90,
+  "width": 500,
+  "height": 800,
+  "roundness": {
+   "type": 3
+  },
+  "backgroundColor": "#ffd8a8",
+  "fillStyle": "solid",
+  "strokeColor": "#f59e0b",
+  "strokeWidth": 1,
+  "opacity": 30
+ },
+ {
+  "type": "text",
+  "id": "zat",
+  "x": 1286,
+  "y": 100,
+  "text": "AWS account (eu-central-1)",
+  "fontSize": 20
+ },
+ {
+  "type": "rectangle",
+  "id": "role",
+  "x": 1300,
+  "y": 140,
+  "width": 440,
+  "height": 90,
+  "roundness": {
+   "type": 3
+  },
+  "backgroundColor": "#ffc9c9",
+  "fillStyle": "solid",
+  "strokeColor": "#ef4444",
+  "label": {
+   "text": "IAM role <name>-gha\nGitHub OIDC, no stored keys\nassumed by 3, 5 and 6",
+   "fontSize": 17
+  }
+ },
+ {
+  "type": "rectangle",
+  "id": "ecr",
+  "x": 1300,
+  "y": 255,
+  "width": 440,
+  "height": 80,
+  "roundness": {
+   "type": 3
+  },
+  "backgroundColor": "#c3fae8",
+  "fillStyle": "solid",
+  "strokeColor": "#06b6d4",
+  "label": {
+   "text": "ECR <name>/hello\nIMMUTABLE tags: 1.0.0, 1.1.0",
+   "fontSize": 17
+  }
+ },
+ {
+  "type": "rectangle",
+  "id": "s3b",
+  "x": 1300,
+  "y": 420,
+  "width": 440,
+  "height": 80,
+  "roundness": {
+   "type": 3
+  },
+  "backgroundColor": "#c3fae8",
+  "fillStyle": "solid",
+  "strokeColor": "#06b6d4",
+  "label": {
+   "text": "S3 <name>-infra-code-tfstate-\u2026\nkey infra-code/terraform.tfstate",
+   "fontSize": 17
+  }
+ },
+ {
+  "type": "rectangle",
+  "id": "eks",
+  "x": 1300,
+  "y": 530,
+  "width": 440,
+  "height": 180,
+  "roundness": {
+   "type": 3
+  },
+  "backgroundColor": "#b2f2bb",
+  "fillStyle": "solid",
+  "strokeColor": "#22c55e",
+  "label": {
+   "text": "EKS: your cluster, namespace default\nDeployment hello (3 Pods)\nrolling update, 1 Pod at a time\nService hello :80 \u2192 8080",
+   "fontSize": 17
+  }
+ },
+ {
+  "type": "text",
+  "id": "rolenote",
+  "x": 1300,
+  "y": 730,
+  "text": "The role also has an EKS access entry\n(cluster admin), so Terraform on the\nrunner can talk to Kubernetes.",
+  "fontSize": 16,
+  "strokeColor": "#757575"
+ },
+ {
+  "type": "arrow",
+  "id": "assume",
+  "x": 1150,
+  "y": 185,
+  "width": 150,
+  "height": 0,
+  "points": [
+   [
+    0,
+    0
+   ],
+   [
+    150,
+    0
+   ]
+  ],
+  "endArrowhead": "arrow",
+  "startBinding": {
+   "elementId": "s3",
+   "fixedPoint": [
+    1,
+    0.23333333333333334
+   ]
+  },
+  "endBinding": {
+   "elementId": "role",
+   "fixedPoint": [
+    0,
+    0.5
+   ]
+  },
+  "label": {
+   "text": "OIDC",
+   "fontSize": 16
+  },
+  "strokeStyle": "dashed"
+ },
+ {
+  "type": "arrow",
+  "id": "push",
+  "x": 1150,
+  "y": 285,
+  "width": 150,
+  "height": 0,
+  "points": [
+   [
+    0,
+    0
+   ],
+   [
+    150,
+    0
+   ]
+  ],
+  "endArrowhead": "arrow",
+  "startBinding": {
+   "elementId": "s3",
+   "fixedPoint": [
+    1,
+    0.9
+   ]
+  },
+  "endBinding": {
+   "elementId": "ecr",
+   "fixedPoint": [
+    0,
+    0.375
+   ]
+  },
+  "label": {
+   "text": "push",
+   "fontSize": 16
+  }
+ },
+ {
+  "type": "arrow",
+  "id": "pull",
+  "x": 1740,
+  "y": 295,
+  "width": 30,
+  "height": 325,
+  "points": [
+   [
+    0,
+    0
+   ],
+   [
+    30,
+    0
+   ],
+   [
+    30,
+    325
+   ],
+   [
+    0,
+    325
+   ]
+  ],
+  "endArrowhead": "arrow",
+  "startBinding": {
+   "elementId": "ecr",
+   "fixedPoint": [
+    1,
+    0.5
+   ]
+  },
+  "endBinding": {
+   "elementId": "eks",
+   "fixedPoint": [
+    1,
+    0.5
+   ]
+  },
+  "label": {
+   "text": "pull",
+   "fontSize": 16
+  }
+ },
+ {
+  "type": "arrow",
+  "id": "state",
+  "x": 1150,
+  "y": 460,
+  "width": 150,
+  "height": 0,
+  "points": [
+   [
+    0,
+    0
+   ],
+   [
+    150,
+    0
+   ]
+  ],
+  "endArrowhead": "arrow",
+  "startBinding": {
+   "elementId": "i6",
+   "fixedPoint": [
+    1,
+    0.13333333333333333
+   ]
+  },
+  "endBinding": {
+   "elementId": "s3b",
+   "fixedPoint": [
+    0,
+    0.5
+   ]
+  },
+  "label": {
+   "text": "state",
+   "fontSize": 16
+  },
+  "strokeStyle": "dashed"
+ },
+ {
+  "type": "arrow",
+  "id": "apply",
+  "x": 1150,
+  "y": 565,
+  "width": 150,
+  "height": 0,
+  "points": [
+   [
+    0,
+    0
+   ],
+   [
+    150,
+    0
+   ]
+  ],
+  "endArrowhead": "arrow",
+  "startBinding": {
+   "elementId": "i6",
+   "fixedPoint": [
+    1,
+    0.8333333333333334
+   ]
+  },
+  "endBinding": {
+   "elementId": "eks",
+   "fixedPoint": [
+    0,
+    0.19444444444444445
+   ]
+  },
+  "label": {
+   "text": "apply",
+   "fontSize": 16
+  }
+ },
+ {
+  "type": "rectangle",
+  "id": "zl",
+  "x": 20,
+  "y": 670,
+  "width": 1150,
+  "height": 220,
+  "roundness": {
+   "type": 3
+  },
+  "backgroundColor": "#b2f2bb",
+  "fillStyle": "solid",
+  "strokeColor": "#22c55e",
+  "strokeWidth": 1,
+  "opacity": 30
+ },
+ {
+  "type": "text",
+  "id": "zlt",
+  "x": 36,
+  "y": 680,
+  "text": "Your laptop",
+  "fontSize": 20
+ },
+ {
+  "type": "rectangle",
+  "id": "l0",
+  "x": 40,
+  "y": 730,
+  "width": 560,
+  "height": 140,
+  "roundness": {
+   "type": 3
+  },
+  "backgroundColor": "#e9ecef",
+  "fillStyle": "solid",
+  "strokeColor": "#868e96",
+  "label": {
+   "text": "-1  once, by hand\nbootstrap/: terraform apply (ECR, S3, role)\ndocker build + push :1.0.0\ninfra-code/: terraform apply\nrepo variables: AWS_ROLE_ARN, ECR_REPOSITORY_URL",
+   "fontSize": 16
+  }
+ },
+ {
+  "type": "rectangle",
+  "id": "l7",
+  "x": 630,
+  "y": 730,
+  "width": 520,
+  "height": 140,
+  "roundness": {
+   "type": 3
+  },
+  "backgroundColor": "#b2f2bb",
+  "fillStyle": "solid",
+  "strokeColor": "#22c55e",
+  "label": {
+   "text": "0 and 7  watch it roll out\nkubectl get pods -l app=hello -w\nkubectl rollout status deployment/hello\ncurl, through kubectl port-forward",
+   "fontSize": 16
+  }
+ },
+ {
+  "type": "arrow",
+  "id": "watch",
+  "x": 1150,
+  "y": 800,
+  "width": 150,
+  "height": 180,
+  "points": [
+   [
+    0,
+    0
+   ],
+   [
+    75,
+    0
+   ],
+   [
+    75,
+    -180
+   ],
+   [
+    150,
+    -180
+   ]
+  ],
+  "endArrowhead": "arrow",
+  "startBinding": {
+   "elementId": "l7",
+   "fixedPoint": [
+    1,
+    0.5
+   ]
+  },
+  "endBinding": {
+   "elementId": "eks",
+   "fixedPoint": [
+    0.0,
+    0.5
+   ]
+  },
+  "label": {
+   "text": "watch",
+   "fontSize": 16
+  }
+ }
+]
