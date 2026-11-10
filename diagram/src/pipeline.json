@@ -12,7 +12,7 @@
   "id": "sub",
   "x": 20,
   "y": 50,
-  "text": "<name> = your short name (robi)  \u00b7  <gh> = your GitHub user  \u00b7  numbers = the order you do things in",
+  "text": "<name> = your short name (robi)  ·  <gh> = your GitHub user  ·  steps below",
   "fontSize": 17,
   "strokeColor": "#757575"
  },
@@ -22,7 +22,7 @@
   "x": 20,
   "y": 90,
   "width": 1150,
-  "height": 250,
+  "height": 220,
   "roundness": {
    "type": 3
   },
@@ -44,9 +44,9 @@
   "type": "rectangle",
   "id": "s1",
   "x": 40,
-  "y": 150,
+  "y": 160,
   "width": 250,
-  "height": 150,
+  "height": 110,
   "roundness": {
    "type": 3
   },
@@ -54,17 +54,17 @@
   "fillStyle": "solid",
   "strokeColor": "#f59e0b",
   "label": {
-   "text": "1  branch say-bye\napp.py: Hello \u2192 Bye\n(and test_app.py)\nuv version --bump minor\n1.0.0 \u2192 1.1.0",
-   "fontSize": 17
+   "text": "branch say-bye\napp.py, test_app.py\npyproject.toml",
+   "fontSize": 18
   }
  },
  {
   "type": "rectangle",
   "id": "s2",
-  "x": 320,
-  "y": 150,
-  "width": 270,
-  "height": 150,
+  "x": 330,
+  "y": 160,
+  "width": 250,
+  "height": 110,
   "roundness": {
    "type": 3
   },
@@ -72,15 +72,15 @@
   "fillStyle": "solid",
   "strokeColor": "#4a9eed",
   "label": {
-   "text": "2  pull request\n.github/workflows/pr.yml\n\u2022 unittest\n\u2022 docker build (no push)",
-   "fontSize": 17
+   "text": "pull request\npr.yml",
+   "fontSize": 18
   }
  },
  {
   "type": "rectangle",
   "id": "s2m",
   "x": 620,
-  "y": 185,
+  "y": 175,
   "width": 120,
   "height": 80,
   "roundness": {
@@ -90,17 +90,17 @@
   "fillStyle": "solid",
   "strokeColor": "#868e96",
   "label": {
-   "text": "you\nmerge",
-   "fontSize": 17
+   "text": "merge",
+   "fontSize": 18
   }
  },
  {
   "type": "rectangle",
   "id": "s3",
-  "x": 770,
-  "y": 150,
-  "width": 380,
-  "height": 150,
+  "x": 780,
+  "y": 160,
+  "width": 370,
+  "height": 110,
   "roundness": {
    "type": 3
   },
@@ -108,16 +108,16 @@
   "fillStyle": "solid",
   "strokeColor": "#4a9eed",
   "label": {
-   "text": "3  push to main\n.github/workflows/main.yml\n\u2022 unittest\n\u2022 version=$(uv version --short)\n\u2022 docker build + push :1.1.0",
-   "fontSize": 17
+   "text": "main\nmain.yml",
+   "fontSize": 18
   }
  },
  {
   "type": "arrow",
   "id": "s1-s2",
   "x": 290,
-  "y": 225,
-  "width": 30,
+  "y": 215,
+  "width": 40,
   "height": 0,
   "points": [
    [
@@ -125,7 +125,7 @@
     0
    ],
    [
-    30,
+    40,
     0
    ]
   ],
@@ -148,9 +148,9 @@
  {
   "type": "arrow",
   "id": "s2-s2m",
-  "x": 590,
-  "y": 225,
-  "width": 30,
+  "x": 580,
+  "y": 215,
+  "width": 40,
   "height": 0,
   "points": [
    [
@@ -158,7 +158,7 @@
     0
    ],
    [
-    30,
+    40,
     0
    ]
   ],
@@ -182,8 +182,8 @@
   "type": "arrow",
   "id": "s2m-s3",
   "x": 740,
-  "y": 225,
-  "width": 30,
+  "y": 215,
+  "width": 40,
   "height": 0,
   "points": [
    [
@@ -191,7 +191,7 @@
     0
    ],
    [
-    30,
+    40,
     0
    ]
   ],
@@ -215,9 +215,9 @@
   "type": "rectangle",
   "id": "zi",
   "x": 20,
-  "y": 380,
+  "y": 350,
   "width": 1150,
-  "height": 250,
+  "height": 220,
   "roundness": {
    "type": 3
   },
@@ -231,7 +231,7 @@
   "type": "text",
   "id": "zit",
   "x": 36,
-  "y": 390,
+  "y": 360,
   "text": "GitHub: <gh>/infra-code",
   "fontSize": 20
  },
@@ -239,9 +239,9 @@
   "type": "rectangle",
   "id": "i4",
   "x": 40,
-  "y": 440,
+  "y": 420,
   "width": 250,
-  "height": 150,
+  "height": 110,
   "roundness": {
    "type": 3
   },
@@ -249,17 +249,17 @@
   "fillStyle": "solid",
   "strokeColor": "#f59e0b",
   "label": {
-   "text": "4  branch hello-1.1.0\nk8s/deployment.yaml\nimage: \u2026/hello:1.0.0\n\u2192 \u2026/hello:1.1.0",
-   "fontSize": 17
+   "text": "branch hello-1.1.0\nk8s/deployment.yaml",
+   "fontSize": 18
   }
  },
  {
   "type": "rectangle",
   "id": "i5",
-  "x": 320,
-  "y": 440,
-  "width": 270,
-  "height": 150,
+  "x": 330,
+  "y": 420,
+  "width": 250,
+  "height": 110,
   "roundness": {
    "type": 3
   },
@@ -267,15 +267,15 @@
   "fillStyle": "solid",
   "strokeColor": "#8b5cf6",
   "label": {
-   "text": "5  pull request\n.github/workflows/pr.yml\n\u2022 fmt -check, init\n\u2022 validate\n\u2022 plan",
-   "fontSize": 17
+   "text": "pull request\npr.yml",
+   "fontSize": 18
   }
  },
  {
   "type": "rectangle",
   "id": "i5m",
   "x": 620,
-  "y": 475,
+  "y": 435,
   "width": 120,
   "height": 80,
   "roundness": {
@@ -285,17 +285,17 @@
   "fillStyle": "solid",
   "strokeColor": "#868e96",
   "label": {
-   "text": "you\nmerge",
-   "fontSize": 17
+   "text": "merge",
+   "fontSize": 18
   }
  },
  {
   "type": "rectangle",
   "id": "i6",
-  "x": 770,
-  "y": 440,
-  "width": 380,
-  "height": 150,
+  "x": 780,
+  "y": 420,
+  "width": 370,
+  "height": 110,
   "roundness": {
    "type": 3
   },
@@ -303,16 +303,16 @@
   "fillStyle": "solid",
   "strokeColor": "#8b5cf6",
   "label": {
-   "text": "6  push to main\n.github/workflows/main.yml\n\u2022 fmt -check, init\n\u2022 validate, plan\n\u2022 apply (no approval)",
-   "fontSize": 17
+   "text": "main\nmain.yml",
+   "fontSize": 18
   }
  },
  {
   "type": "arrow",
   "id": "i4-i5",
   "x": 290,
-  "y": 515,
-  "width": 30,
+  "y": 475,
+  "width": 40,
   "height": 0,
   "points": [
    [
@@ -320,7 +320,7 @@
     0
    ],
    [
-    30,
+    40,
     0
    ]
   ],
@@ -343,9 +343,9 @@
  {
   "type": "arrow",
   "id": "i5-i5m",
-  "x": 590,
-  "y": 515,
-  "width": 30,
+  "x": 580,
+  "y": 475,
+  "width": 40,
   "height": 0,
   "points": [
    [
@@ -353,7 +353,7 @@
     0
    ],
    [
-    30,
+    40,
     0
    ]
   ],
@@ -377,8 +377,8 @@
   "type": "arrow",
   "id": "i5m-i6",
   "x": 740,
-  "y": 515,
-  "width": 30,
+  "y": 475,
+  "width": 40,
   "height": 0,
   "points": [
    [
@@ -386,7 +386,7 @@
     0
    ],
    [
-    30,
+    40,
     0
    ]
   ],
@@ -409,10 +409,10 @@
  {
   "type": "arrow",
   "id": "s3-i4",
-  "x": 960,
-  "y": 300,
-  "width": 690,
-  "height": 140,
+  "x": 965,
+  "y": 270,
+  "width": 680,
+  "height": 150,
   "points": [
    [
     0,
@@ -420,15 +420,15 @@
    ],
    [
     0,
-    40
+    50
    ],
    [
-    -690,
-    40
+    -680,
+    50
    ],
    [
-    -690,
-    140
+    -680,
+    150
    ]
   ],
   "endArrowhead": "arrow",
@@ -442,15 +442,75 @@
   "endBinding": {
    "elementId": "i4",
    "fixedPoint": [
-    0.94,
+    0.98,
     0
    ]
   },
   "label": {
-   "text": "when 3 is green: the new tag",
+   "text": "new tag: 1.1.0",
    "fontSize": 16
   },
   "strokeStyle": "dashed"
+ },
+ {
+  "type": "rectangle",
+  "id": "zl",
+  "x": 20,
+  "y": 610,
+  "width": 1150,
+  "height": 200,
+  "roundness": {
+   "type": 3
+  },
+  "backgroundColor": "#b2f2bb",
+  "fillStyle": "solid",
+  "strokeColor": "#22c55e",
+  "strokeWidth": 1,
+  "opacity": 30
+ },
+ {
+  "type": "text",
+  "id": "zlt",
+  "x": 36,
+  "y": 620,
+  "text": "Your laptop",
+  "fontSize": 20
+ },
+ {
+  "type": "rectangle",
+  "id": "l0",
+  "x": 40,
+  "y": 670,
+  "width": 540,
+  "height": 110,
+  "roundness": {
+   "type": 3
+  },
+  "backgroundColor": "#e9ecef",
+  "fillStyle": "solid",
+  "strokeColor": "#868e96",
+  "label": {
+   "text": "bootstrap/  (once, by hand)\nterraform apply",
+   "fontSize": 18
+  }
+ },
+ {
+  "type": "rectangle",
+  "id": "l7",
+  "x": 620,
+  "y": 670,
+  "width": 530,
+  "height": 110,
+  "roundness": {
+   "type": 3
+  },
+  "backgroundColor": "#b2f2bb",
+  "fillStyle": "solid",
+  "strokeColor": "#22c55e",
+  "label": {
+   "text": "terminal\nkubectl get pods -l app=hello -w",
+   "fontSize": 18
+  }
  },
  {
   "type": "rectangle",
@@ -458,7 +518,7 @@
   "x": 1270,
   "y": 90,
   "width": 500,
-  "height": 800,
+  "height": 720,
   "roundness": {
    "type": 3
   },
@@ -482,7 +542,7 @@
   "x": 1300,
   "y": 140,
   "width": 440,
-  "height": 90,
+  "height": 80,
   "roundness": {
    "type": 3
   },
@@ -490,15 +550,15 @@
   "fillStyle": "solid",
   "strokeColor": "#ef4444",
   "label": {
-   "text": "IAM role <name>-gha\nGitHub OIDC, no stored keys\nassumed by 3, 5 and 6",
-   "fontSize": 17
+   "text": "IAM role <name>-gha\n(GitHub OIDC, no keys)",
+   "fontSize": 18
   }
  },
  {
   "type": "rectangle",
   "id": "ecr",
   "x": 1300,
-  "y": 255,
+  "y": 250,
   "width": 440,
   "height": 80,
   "roundness": {
@@ -508,15 +568,15 @@
   "fillStyle": "solid",
   "strokeColor": "#06b6d4",
   "label": {
-   "text": "ECR <name>/hello\nIMMUTABLE tags: 1.0.0, 1.1.0",
-   "fontSize": 17
+   "text": "ECR <name>/hello\n1.0.0, 1.1.0 (immutable)",
+   "fontSize": 18
   }
  },
  {
   "type": "rectangle",
   "id": "s3b",
   "x": 1300,
-  "y": 420,
+  "y": 400,
   "width": 440,
   "height": 80,
   "roundness": {
@@ -526,17 +586,17 @@
   "fillStyle": "solid",
   "strokeColor": "#06b6d4",
   "label": {
-   "text": "S3 <name>-infra-code-tfstate-\u2026\nkey infra-code/terraform.tfstate",
-   "fontSize": 17
+   "text": "S3 <name>-infra-code-tfstate-…",
+   "fontSize": 18
   }
  },
  {
   "type": "rectangle",
   "id": "eks",
   "x": 1300,
-  "y": 530,
+  "y": 500,
   "width": 440,
-  "height": 180,
+  "height": 150,
   "roundness": {
    "type": 3
   },
@@ -544,24 +604,15 @@
   "fillStyle": "solid",
   "strokeColor": "#22c55e",
   "label": {
-   "text": "EKS: your cluster, namespace default\nDeployment hello (3 Pods)\nrolling update, 1 Pod at a time\nService hello :80 \u2192 8080",
-   "fontSize": 17
+   "text": "EKS: your cluster\nDeployment hello (3 Pods)\nService hello",
+   "fontSize": 18
   }
- },
- {
-  "type": "text",
-  "id": "rolenote",
-  "x": 1300,
-  "y": 730,
-  "text": "The role also has an EKS access entry\n(cluster admin), so Terraform on the\nrunner can talk to Kubernetes.",
-  "fontSize": 16,
-  "strokeColor": "#757575"
  },
  {
   "type": "arrow",
   "id": "assume",
   "x": 1150,
-  "y": 185,
+  "y": 180,
   "width": 150,
   "height": 0,
   "points": [
@@ -579,7 +630,7 @@
    "elementId": "s3",
    "fixedPoint": [
     1,
-    0.23333333333333334
+    0.18181818181818182
    ]
   },
   "endBinding": {
@@ -599,7 +650,7 @@
   "type": "arrow",
   "id": "push",
   "x": 1150,
-  "y": 285,
+  "y": 255,
   "width": 150,
   "height": 0,
   "points": [
@@ -617,14 +668,14 @@
    "elementId": "s3",
    "fixedPoint": [
     1,
-    0.9
+    0.8636363636363636
    ]
   },
   "endBinding": {
    "elementId": "ecr",
    "fixedPoint": [
     0,
-    0.375
+    0.0625
    ]
   },
   "label": {
@@ -636,9 +687,9 @@
   "type": "arrow",
   "id": "pull",
   "x": 1740,
-  "y": 295,
+  "y": 290,
   "width": 30,
-  "height": 325,
+  "height": 285,
   "points": [
    [
     0,
@@ -650,11 +701,11 @@
    ],
    [
     30,
-    325
+    285
    ],
    [
     0,
-    325
+    285
    ]
   ],
   "endArrowhead": "arrow",
@@ -681,7 +732,7 @@
   "type": "arrow",
   "id": "state",
   "x": 1150,
-  "y": 460,
+  "y": 440,
   "width": 150,
   "height": 0,
   "points": [
@@ -699,7 +750,7 @@
    "elementId": "i6",
    "fixedPoint": [
     1,
-    0.13333333333333333
+    0.18181818181818182
    ]
   },
   "endBinding": {
@@ -719,7 +770,7 @@
   "type": "arrow",
   "id": "apply",
   "x": 1150,
-  "y": 565,
+  "y": 515,
   "width": 150,
   "height": 0,
   "points": [
@@ -737,14 +788,14 @@
    "elementId": "i6",
    "fixedPoint": [
     1,
-    0.8333333333333334
+    0.8636363636363636
    ]
   },
   "endBinding": {
    "elementId": "eks",
    "fixedPoint": [
     0,
-    0.19444444444444445
+    0.1
    ]
   },
   "label": {
@@ -753,72 +804,12 @@
   }
  },
  {
-  "type": "rectangle",
-  "id": "zl",
-  "x": 20,
-  "y": 670,
-  "width": 1150,
-  "height": 220,
-  "roundness": {
-   "type": 3
-  },
-  "backgroundColor": "#b2f2bb",
-  "fillStyle": "solid",
-  "strokeColor": "#22c55e",
-  "strokeWidth": 1,
-  "opacity": 30
- },
- {
-  "type": "text",
-  "id": "zlt",
-  "x": 36,
-  "y": 680,
-  "text": "Your laptop",
-  "fontSize": 20
- },
- {
-  "type": "rectangle",
-  "id": "l0",
-  "x": 40,
-  "y": 730,
-  "width": 560,
-  "height": 140,
-  "roundness": {
-   "type": 3
-  },
-  "backgroundColor": "#e9ecef",
-  "fillStyle": "solid",
-  "strokeColor": "#868e96",
-  "label": {
-   "text": "-1  once, by hand\nbootstrap/: terraform apply (ECR, S3, role)\ndocker build + push :1.0.0\ninfra-code/: terraform apply\nrepo variables: AWS_ROLE_ARN, ECR_REPOSITORY_URL",
-   "fontSize": 16
-  }
- },
- {
-  "type": "rectangle",
-  "id": "l7",
-  "x": 630,
-  "y": 730,
-  "width": 520,
-  "height": 140,
-  "roundness": {
-   "type": 3
-  },
-  "backgroundColor": "#b2f2bb",
-  "fillStyle": "solid",
-  "strokeColor": "#22c55e",
-  "label": {
-   "text": "0 and 7  watch it roll out\nkubectl get pods -l app=hello -w\nkubectl rollout status deployment/hello\ncurl, through kubectl port-forward",
-   "fontSize": 16
-  }
- },
- {
   "type": "arrow",
   "id": "watch",
   "x": 1150,
-  "y": 800,
+  "y": 725,
   "width": 150,
-  "height": 180,
+  "height": 95,
   "points": [
    [
     0,
@@ -830,11 +821,11 @@
    ],
    [
     75,
-    -180
+    -95
    ],
    [
     150,
-    -180
+    -95
    ]
   ],
   "endArrowhead": "arrow",
@@ -848,13 +839,381 @@
   "endBinding": {
    "elementId": "eks",
    "fixedPoint": [
-    0.0,
-    0.5
+    0,
+    0.8666666666666667
    ]
   },
   "label": {
    "text": "watch",
    "fontSize": 16
   }
+ },
+ {
+  "type": "ellipse",
+  "id": "badge-1-40-670",
+  "x": 20.0,
+  "y": 650.0,
+  "width": 40,
+  "height": 40,
+  "backgroundColor": "#1e1e1e",
+  "fillStyle": "solid",
+  "strokeColor": "#1e1e1e",
+  "label": {
+   "text": "-1",
+   "fontSize": 20,
+   "strokeColor": "#ffffff"
+  }
+ },
+ {
+  "type": "ellipse",
+  "id": "badge0-620-670",
+  "x": 600.0,
+  "y": 650.0,
+  "width": 40,
+  "height": 40,
+  "backgroundColor": "#1e1e1e",
+  "fillStyle": "solid",
+  "strokeColor": "#1e1e1e",
+  "label": {
+   "text": "0",
+   "fontSize": 20,
+   "strokeColor": "#ffffff"
+  }
+ },
+ {
+  "type": "ellipse",
+  "id": "badge7-1150-670",
+  "x": 1130.0,
+  "y": 650.0,
+  "width": 40,
+  "height": 40,
+  "backgroundColor": "#1e1e1e",
+  "fillStyle": "solid",
+  "strokeColor": "#1e1e1e",
+  "label": {
+   "text": "7",
+   "fontSize": 20,
+   "strokeColor": "#ffffff"
+  }
+ },
+ {
+  "type": "ellipse",
+  "id": "badge1-40-160",
+  "x": 20.0,
+  "y": 140.0,
+  "width": 40,
+  "height": 40,
+  "backgroundColor": "#1e1e1e",
+  "fillStyle": "solid",
+  "strokeColor": "#1e1e1e",
+  "label": {
+   "text": "1",
+   "fontSize": 20,
+   "strokeColor": "#ffffff"
+  }
+ },
+ {
+  "type": "ellipse",
+  "id": "badge2-330-160",
+  "x": 310.0,
+  "y": 140.0,
+  "width": 40,
+  "height": 40,
+  "backgroundColor": "#1e1e1e",
+  "fillStyle": "solid",
+  "strokeColor": "#1e1e1e",
+  "label": {
+   "text": "2",
+   "fontSize": 20,
+   "strokeColor": "#ffffff"
+  }
+ },
+ {
+  "type": "ellipse",
+  "id": "badge3-780-160",
+  "x": 760.0,
+  "y": 140.0,
+  "width": 40,
+  "height": 40,
+  "backgroundColor": "#1e1e1e",
+  "fillStyle": "solid",
+  "strokeColor": "#1e1e1e",
+  "label": {
+   "text": "3",
+   "fontSize": 20,
+   "strokeColor": "#ffffff"
+  }
+ },
+ {
+  "type": "ellipse",
+  "id": "badge4-40-420",
+  "x": 20.0,
+  "y": 400.0,
+  "width": 40,
+  "height": 40,
+  "backgroundColor": "#1e1e1e",
+  "fillStyle": "solid",
+  "strokeColor": "#1e1e1e",
+  "label": {
+   "text": "4",
+   "fontSize": 20,
+   "strokeColor": "#ffffff"
+  }
+ },
+ {
+  "type": "ellipse",
+  "id": "badge5-330-420",
+  "x": 310.0,
+  "y": 400.0,
+  "width": 40,
+  "height": 40,
+  "backgroundColor": "#1e1e1e",
+  "fillStyle": "solid",
+  "strokeColor": "#1e1e1e",
+  "label": {
+   "text": "5",
+   "fontSize": 20,
+   "strokeColor": "#ffffff"
+  }
+ },
+ {
+  "type": "ellipse",
+  "id": "badge6-780-420",
+  "x": 760.0,
+  "y": 400.0,
+  "width": 40,
+  "height": 40,
+  "backgroundColor": "#1e1e1e",
+  "fillStyle": "solid",
+  "strokeColor": "#1e1e1e",
+  "label": {
+   "text": "6",
+   "fontSize": 20,
+   "strokeColor": "#ffffff"
+  }
+ },
+ {
+  "type": "text",
+  "id": "stepst",
+  "x": 20,
+  "y": 850,
+  "text": "Steps",
+  "fontSize": 24
+ },
+ {
+  "type": "ellipse",
+  "id": "badge-1-60-920",
+  "x": 40.0,
+  "y": 900.0,
+  "width": 40,
+  "height": 40,
+  "backgroundColor": "#1e1e1e",
+  "fillStyle": "solid",
+  "strokeColor": "#1e1e1e",
+  "label": {
+   "text": "-1",
+   "fontSize": 20,
+   "strokeColor": "#ffffff"
+  }
+ },
+ {
+  "type": "text",
+  "id": "step-1",
+  "x": 96,
+  "y": 902,
+  "text": "Once, by hand: terraform apply in bootstrap/ (ECR, S3 bucket, IAM role),\ndocker push :1.0.0, terraform apply in infra-code/, set the repo variables",
+  "fontSize": 17
+ },
+ {
+  "type": "ellipse",
+  "id": "badge0-60-990",
+  "x": 40.0,
+  "y": 970.0,
+  "width": 40,
+  "height": 40,
+  "backgroundColor": "#1e1e1e",
+  "fillStyle": "solid",
+  "strokeColor": "#1e1e1e",
+  "label": {
+   "text": "0",
+   "fontSize": 20,
+   "strokeColor": "#ffffff"
+  }
+ },
+ {
+  "type": "text",
+  "id": "step0",
+  "x": 96,
+  "y": 972,
+  "text": "Terminal: kubectl get pods -l app=hello -w, leave it open",
+  "fontSize": 17
+ },
+ {
+  "type": "ellipse",
+  "id": "badge1-60-1060",
+  "x": 40.0,
+  "y": 1040.0,
+  "width": 40,
+  "height": 40,
+  "backgroundColor": "#1e1e1e",
+  "fillStyle": "solid",
+  "strokeColor": "#1e1e1e",
+  "label": {
+   "text": "1",
+   "fontSize": 20,
+   "strokeColor": "#ffffff"
+  }
+ },
+ {
+  "type": "text",
+  "id": "step1",
+  "x": 96,
+  "y": 1042,
+  "text": "service-code, new branch: Hello → Bye in app.py and test_app.py,\nuv version --bump minor (1.0.0 → 1.1.0)",
+  "fontSize": 17
+ },
+ {
+  "type": "ellipse",
+  "id": "badge2-60-1130",
+  "x": 40.0,
+  "y": 1110.0,
+  "width": 40,
+  "height": 40,
+  "backgroundColor": "#1e1e1e",
+  "fillStyle": "solid",
+  "strokeColor": "#1e1e1e",
+  "label": {
+   "text": "2",
+   "fontSize": 20,
+   "strokeColor": "#ffffff"
+  }
+ },
+ {
+  "type": "text",
+  "id": "step2",
+  "x": 96,
+  "y": 1112,
+  "text": "Pull request: pr.yml runs unittest and docker build (no push).\nGreen: you merge",
+  "fontSize": 17
+ },
+ {
+  "type": "ellipse",
+  "id": "badge3-60-1200",
+  "x": 40.0,
+  "y": 1180.0,
+  "width": 40,
+  "height": 40,
+  "backgroundColor": "#1e1e1e",
+  "fillStyle": "solid",
+  "strokeColor": "#1e1e1e",
+  "label": {
+   "text": "3",
+   "fontSize": 20,
+   "strokeColor": "#ffffff"
+  }
+ },
+ {
+  "type": "text",
+  "id": "step3",
+  "x": 96,
+  "y": 1182,
+  "text": "Push to main: main.yml runs unittest, reads the version (uv version --short),\nassumes the role via OIDC, builds and pushes hello:1.1.0 to ECR",
+  "fontSize": 17
+ },
+ {
+  "type": "ellipse",
+  "id": "badge4-930-920",
+  "x": 910.0,
+  "y": 900.0,
+  "width": 40,
+  "height": 40,
+  "backgroundColor": "#1e1e1e",
+  "fillStyle": "solid",
+  "strokeColor": "#1e1e1e",
+  "label": {
+   "text": "4",
+   "fontSize": 20,
+   "strokeColor": "#ffffff"
+  }
+ },
+ {
+  "type": "text",
+  "id": "step4",
+  "x": 966,
+  "y": 902,
+  "text": "infra-code, new branch: image tag 1.0.0 → 1.1.0 in k8s/deployment.yaml",
+  "fontSize": 17
+ },
+ {
+  "type": "ellipse",
+  "id": "badge5-930-990",
+  "x": 910.0,
+  "y": 970.0,
+  "width": 40,
+  "height": 40,
+  "backgroundColor": "#1e1e1e",
+  "fillStyle": "solid",
+  "strokeColor": "#1e1e1e",
+  "label": {
+   "text": "5",
+   "fontSize": 20,
+   "strokeColor": "#ffffff"
+  }
+ },
+ {
+  "type": "text",
+  "id": "step5",
+  "x": 966,
+  "y": 972,
+  "text": "Pull request: pr.yml runs fmt -check, init, validate, plan.\nThe plan shows one change: the image. You merge",
+  "fontSize": 17
+ },
+ {
+  "type": "ellipse",
+  "id": "badge6-930-1060",
+  "x": 910.0,
+  "y": 1040.0,
+  "width": 40,
+  "height": 40,
+  "backgroundColor": "#1e1e1e",
+  "fillStyle": "solid",
+  "strokeColor": "#1e1e1e",
+  "label": {
+   "text": "6",
+   "fontSize": 20,
+   "strokeColor": "#ffffff"
+  }
+ },
+ {
+  "type": "text",
+  "id": "step6",
+  "x": 966,
+  "y": 1042,
+  "text": "Push to main: main.yml runs the same, then apply, no approval.\nThe state lives in S3",
+  "fontSize": 17
+ },
+ {
+  "type": "ellipse",
+  "id": "badge7-930-1130",
+  "x": 910.0,
+  "y": 1110.0,
+  "width": 40,
+  "height": 40,
+  "backgroundColor": "#1e1e1e",
+  "fillStyle": "solid",
+  "strokeColor": "#1e1e1e",
+  "label": {
+   "text": "7",
+   "fontSize": 20,
+   "strokeColor": "#ffffff"
+  }
+ },
+ {
+  "type": "text",
+  "id": "step7",
+  "x": 966,
+  "y": 1112,
+  "text": "Terminal: a new Pod with 1.1.0, ready, an old one goes; three times.\ncurl says Bye",
+  "fontSize": 17
  }
 ]
