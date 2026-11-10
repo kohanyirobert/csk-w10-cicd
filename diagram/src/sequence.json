@@ -1,0 +1,1120 @@
+[
+ {
+  "type": "text",
+  "id": "title",
+  "x": 20,
+  "y": 10,
+  "fontSize": 26,
+  "text": "One change, two pipelines: who talks to whom, in what order"
+ },
+ {
+  "type": "text",
+  "id": "sub",
+  "x": 20,
+  "y": 48,
+  "fontSize": 17,
+  "strokeColor": "#757575",
+  "text": "solid: request or action  ·  dashed: response  ·  yellow: work on the runner or in the cluster"
+ },
+ {
+  "type": "rectangle",
+  "id": "band0",
+  "x": 20,
+  "y": 192,
+  "width": 1800,
+  "height": 276,
+  "roundness": {
+   "type": 3
+  },
+  "backgroundColor": "#a5d8ff",
+  "fillStyle": "solid",
+  "strokeColor": "#4a9eed",
+  "opacity": 25,
+  "strokeWidth": 1
+ },
+ {
+  "type": "text",
+  "id": "band0t",
+  "x": 32,
+  "y": 198,
+  "text": "1  service-code: pull request",
+  "fontSize": 18
+ },
+ {
+  "type": "rectangle",
+  "id": "band1",
+  "x": 20,
+  "y": 486,
+  "width": 1800,
+  "height": 276,
+  "roundness": {
+   "type": 3
+  },
+  "backgroundColor": "#a5d8ff",
+  "fillStyle": "solid",
+  "strokeColor": "#4a9eed",
+  "opacity": 25,
+  "strokeWidth": 1
+ },
+ {
+  "type": "text",
+  "id": "band1t",
+  "x": 32,
+  "y": 492,
+  "text": "2  service-code: push to main",
+  "fontSize": 18
+ },
+ {
+  "type": "rectangle",
+  "id": "band2",
+  "x": 20,
+  "y": 780,
+  "width": 1800,
+  "height": 460,
+  "roundness": {
+   "type": 3
+  },
+  "backgroundColor": "#d0bfff",
+  "fillStyle": "solid",
+  "strokeColor": "#8b5cf6",
+  "opacity": 25,
+  "strokeWidth": 1
+ },
+ {
+  "type": "text",
+  "id": "band2t",
+  "x": 32,
+  "y": 786,
+  "text": "3  infra-code: pull request",
+  "fontSize": 18
+ },
+ {
+  "type": "rectangle",
+  "id": "band3",
+  "x": 20,
+  "y": 1258,
+  "width": 1800,
+  "height": 304,
+  "roundness": {
+   "type": 3
+  },
+  "backgroundColor": "#d0bfff",
+  "fillStyle": "solid",
+  "strokeColor": "#8b5cf6",
+  "opacity": 25,
+  "strokeWidth": 1
+ },
+ {
+  "type": "text",
+  "id": "band3t",
+  "x": 32,
+  "y": 1264,
+  "text": "4  infra-code: push to main",
+  "fontSize": 18
+ },
+ {
+  "type": "rectangle",
+  "id": "band4",
+  "x": 20,
+  "y": 1580,
+  "width": 1800,
+  "height": 196,
+  "roundness": {
+   "type": 3
+  },
+  "backgroundColor": "#b2f2bb",
+  "fillStyle": "solid",
+  "strokeColor": "#22c55e",
+  "opacity": 25,
+  "strokeWidth": 1
+ },
+ {
+  "type": "text",
+  "id": "band4t",
+  "x": 32,
+  "y": 1586,
+  "text": "5  rollout",
+  "fontSize": 18
+ },
+ {
+  "type": "rectangle",
+  "id": "h-you",
+  "x": 35,
+  "y": 90,
+  "width": 170,
+  "height": 64,
+  "roundness": {
+   "type": 3
+  },
+  "backgroundColor": "#e9ecef",
+  "fillStyle": "solid",
+  "strokeColor": "#868e96",
+  "label": {
+   "text": "You\n(laptop)",
+   "fontSize": 17
+  }
+ },
+ {
+  "type": "line",
+  "id": "life-you",
+  "x": 120,
+  "y": 154,
+  "width": 0,
+  "height": 1646,
+  "points": [
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    1646
+   ]
+  ],
+  "strokeColor": "#868e96",
+  "strokeStyle": "dashed",
+  "strokeWidth": 1
+ },
+ {
+  "type": "rectangle",
+  "id": "h-svc",
+  "x": 235,
+  "y": 90,
+  "width": 170,
+  "height": 64,
+  "roundness": {
+   "type": 3
+  },
+  "backgroundColor": "#a5d8ff",
+  "fillStyle": "solid",
+  "strokeColor": "#4a9eed",
+  "label": {
+   "text": "GitHub\nservice-code",
+   "fontSize": 17
+  }
+ },
+ {
+  "type": "line",
+  "id": "life-svc",
+  "x": 320,
+  "y": 154,
+  "width": 0,
+  "height": 1646,
+  "points": [
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    1646
+   ]
+  ],
+  "strokeColor": "#868e96",
+  "strokeStyle": "dashed",
+  "strokeWidth": 1
+ },
+ {
+  "type": "rectangle",
+  "id": "h-rs",
+  "x": 435,
+  "y": 90,
+  "width": 170,
+  "height": 64,
+  "roundness": {
+   "type": 3
+  },
+  "backgroundColor": "#a5d8ff",
+  "fillStyle": "solid",
+  "strokeColor": "#4a9eed",
+  "label": {
+   "text": "runner\nservice-code",
+   "fontSize": 17
+  }
+ },
+ {
+  "type": "line",
+  "id": "life-rs",
+  "x": 520,
+  "y": 154,
+  "width": 0,
+  "height": 1646,
+  "points": [
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    1646
+   ]
+  ],
+  "strokeColor": "#868e96",
+  "strokeStyle": "dashed",
+  "strokeWidth": 1
+ },
+ {
+  "type": "rectangle",
+  "id": "h-iam",
+  "x": 635,
+  "y": 90,
+  "width": 170,
+  "height": 64,
+  "roundness": {
+   "type": 3
+  },
+  "backgroundColor": "#ffc9c9",
+  "fillStyle": "solid",
+  "strokeColor": "#ef4444",
+  "label": {
+   "text": "AWS IAM\n(OIDC, STS)",
+   "fontSize": 17
+  }
+ },
+ {
+  "type": "line",
+  "id": "life-iam",
+  "x": 720,
+  "y": 154,
+  "width": 0,
+  "height": 1646,
+  "points": [
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    1646
+   ]
+  ],
+  "strokeColor": "#868e96",
+  "strokeStyle": "dashed",
+  "strokeWidth": 1
+ },
+ {
+  "type": "rectangle",
+  "id": "h-ecr",
+  "x": 835,
+  "y": 90,
+  "width": 170,
+  "height": 64,
+  "roundness": {
+   "type": 3
+  },
+  "backgroundColor": "#c3fae8",
+  "fillStyle": "solid",
+  "strokeColor": "#06b6d4",
+  "label": {
+   "text": "ECR\n<name>/hello",
+   "fontSize": 17
+  }
+ },
+ {
+  "type": "line",
+  "id": "life-ecr",
+  "x": 920,
+  "y": 154,
+  "width": 0,
+  "height": 1646,
+  "points": [
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    1646
+   ]
+  ],
+  "strokeColor": "#868e96",
+  "strokeStyle": "dashed",
+  "strokeWidth": 1
+ },
+ {
+  "type": "rectangle",
+  "id": "h-inf",
+  "x": 1035,
+  "y": 90,
+  "width": 170,
+  "height": 64,
+  "roundness": {
+   "type": 3
+  },
+  "backgroundColor": "#d0bfff",
+  "fillStyle": "solid",
+  "strokeColor": "#8b5cf6",
+  "label": {
+   "text": "GitHub\ninfra-code",
+   "fontSize": 17
+  }
+ },
+ {
+  "type": "line",
+  "id": "life-inf",
+  "x": 1120,
+  "y": 154,
+  "width": 0,
+  "height": 1646,
+  "points": [
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    1646
+   ]
+  ],
+  "strokeColor": "#868e96",
+  "strokeStyle": "dashed",
+  "strokeWidth": 1
+ },
+ {
+  "type": "rectangle",
+  "id": "h-ri",
+  "x": 1235,
+  "y": 90,
+  "width": 170,
+  "height": 64,
+  "roundness": {
+   "type": 3
+  },
+  "backgroundColor": "#d0bfff",
+  "fillStyle": "solid",
+  "strokeColor": "#8b5cf6",
+  "label": {
+   "text": "runner\ninfra-code",
+   "fontSize": 17
+  }
+ },
+ {
+  "type": "line",
+  "id": "life-ri",
+  "x": 1320,
+  "y": 154,
+  "width": 0,
+  "height": 1646,
+  "points": [
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    1646
+   ]
+  ],
+  "strokeColor": "#868e96",
+  "strokeStyle": "dashed",
+  "strokeWidth": 1
+ },
+ {
+  "type": "rectangle",
+  "id": "h-s3",
+  "x": 1435,
+  "y": 90,
+  "width": 170,
+  "height": 64,
+  "roundness": {
+   "type": 3
+  },
+  "backgroundColor": "#c3fae8",
+  "fillStyle": "solid",
+  "strokeColor": "#06b6d4",
+  "label": {
+   "text": "S3\nstate",
+   "fontSize": 17
+  }
+ },
+ {
+  "type": "line",
+  "id": "life-s3",
+  "x": 1520,
+  "y": 154,
+  "width": 0,
+  "height": 1646,
+  "points": [
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    1646
+   ]
+  ],
+  "strokeColor": "#868e96",
+  "strokeStyle": "dashed",
+  "strokeWidth": 1
+ },
+ {
+  "type": "rectangle",
+  "id": "h-eks",
+  "x": 1635,
+  "y": 90,
+  "width": 170,
+  "height": 64,
+  "roundness": {
+   "type": 3
+  },
+  "backgroundColor": "#b2f2bb",
+  "fillStyle": "solid",
+  "strokeColor": "#22c55e",
+  "label": {
+   "text": "EKS\nyour cluster",
+   "fontSize": 17
+  }
+ },
+ {
+  "type": "line",
+  "id": "life-eks",
+  "x": 1720,
+  "y": 154,
+  "width": 0,
+  "height": 1646,
+  "points": [
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    1646
+   ]
+  ],
+  "strokeColor": "#868e96",
+  "strokeStyle": "dashed",
+  "strokeWidth": 1
+ },
+ {
+  "type": "arrow",
+  "id": "msg0",
+  "x": 120,
+  "y": 249.0,
+  "width": 200,
+  "height": 0,
+  "points": [
+   [
+    0,
+    0
+   ],
+   [
+    200,
+    0
+   ]
+  ],
+  "endArrowhead": "arrow",
+  "label": {
+   "text": "push, open PR",
+   "fontSize": 16
+  }
+ },
+ {
+  "type": "arrow",
+  "id": "msg1",
+  "x": 320,
+  "y": 295.0,
+  "width": 200,
+  "height": 0,
+  "points": [
+   [
+    0,
+    0
+   ],
+   [
+    200,
+    0
+   ]
+  ],
+  "endArrowhead": "arrow",
+  "label": {
+   "text": "pr.yml",
+   "fontSize": 16
+  }
+ },
+ {
+  "type": "rectangle",
+  "id": "note2",
+  "x": 425,
+  "y": 322,
+  "width": 190,
+  "height": 56,
+  "roundness": {
+   "type": 3
+  },
+  "backgroundColor": "#fff3bf",
+  "fillStyle": "solid",
+  "strokeColor": "#f59e0b",
+  "label": {
+   "text": "unittest, docker build",
+   "fontSize": 16
+  }
+ },
+ {
+  "type": "arrow",
+  "id": "msg3",
+  "x": 520,
+  "y": 405.0,
+  "width": 200,
+  "height": 0,
+  "points": [
+   [
+    0,
+    0
+   ],
+   [
+    -200,
+    0
+   ]
+  ],
+  "endArrowhead": "arrow",
+  "label": {
+   "text": "check ✓",
+   "fontSize": 16
+  },
+  "strokeStyle": "dashed"
+ },
+ {
+  "type": "arrow",
+  "id": "msg4",
+  "x": 120,
+  "y": 451.0,
+  "width": 200,
+  "height": 0,
+  "points": [
+   [
+    0,
+    0
+   ],
+   [
+    200,
+    0
+   ]
+  ],
+  "endArrowhead": "arrow",
+  "label": {
+   "text": "merge",
+   "fontSize": 16
+  }
+ },
+ {
+  "type": "arrow",
+  "id": "msg5",
+  "x": 320,
+  "y": 543.0,
+  "width": 200,
+  "height": 0,
+  "points": [
+   [
+    0,
+    0
+   ],
+   [
+    200,
+    0
+   ]
+  ],
+  "endArrowhead": "arrow",
+  "label": {
+   "text": "main.yml",
+   "fontSize": 16
+  }
+ },
+ {
+  "type": "rectangle",
+  "id": "note6",
+  "x": 425,
+  "y": 570,
+  "width": 190,
+  "height": 56,
+  "roundness": {
+   "type": 3
+  },
+  "backgroundColor": "#fff3bf",
+  "fillStyle": "solid",
+  "strokeColor": "#f59e0b",
+  "label": {
+   "text": "unittest, version 1.1.0,\ndocker build",
+   "fontSize": 16
+  }
+ },
+ {
+  "type": "arrow",
+  "id": "msg7",
+  "x": 520,
+  "y": 653.0,
+  "width": 200,
+  "height": 0,
+  "points": [
+   [
+    0,
+    0
+   ],
+   [
+    200,
+    0
+   ]
+  ],
+  "endArrowhead": "arrow",
+  "label": {
+   "text": "assume role (OIDC)",
+   "fontSize": 16
+  }
+ },
+ {
+  "type": "arrow",
+  "id": "msg8",
+  "x": 720,
+  "y": 699.0,
+  "width": 200,
+  "height": 0,
+  "points": [
+   [
+    0,
+    0
+   ],
+   [
+    -200,
+    0
+   ]
+  ],
+  "endArrowhead": "arrow",
+  "label": {
+   "text": "1 h credentials",
+   "fontSize": 16
+  },
+  "strokeStyle": "dashed"
+ },
+ {
+  "type": "arrow",
+  "id": "msg9",
+  "x": 520,
+  "y": 745.0,
+  "width": 400,
+  "height": 0,
+  "points": [
+   [
+    0,
+    0
+   ],
+   [
+    400,
+    0
+   ]
+  ],
+  "endArrowhead": "arrow",
+  "label": {
+   "text": "push :1.1.0",
+   "fontSize": 16
+  }
+ },
+ {
+  "type": "arrow",
+  "id": "msg10",
+  "x": 120,
+  "y": 837.0,
+  "width": 1000,
+  "height": 0,
+  "points": [
+   [
+    0,
+    0
+   ],
+   [
+    1000,
+    0
+   ]
+  ],
+  "endArrowhead": "arrow",
+  "label": {
+   "text": "branch: tag 1.0.0 → 1.1.0, open PR",
+   "fontSize": 16
+  }
+ },
+ {
+  "type": "arrow",
+  "id": "msg11",
+  "x": 1120,
+  "y": 883.0,
+  "width": 200,
+  "height": 0,
+  "points": [
+   [
+    0,
+    0
+   ],
+   [
+    200,
+    0
+   ]
+  ],
+  "endArrowhead": "arrow",
+  "label": {
+   "text": "pr.yml",
+   "fontSize": 16
+  }
+ },
+ {
+  "type": "arrow",
+  "id": "msg12",
+  "x": 1320,
+  "y": 929.0,
+  "width": 600,
+  "height": 0,
+  "points": [
+   [
+    0,
+    0
+   ],
+   [
+    -600,
+    0
+   ]
+  ],
+  "endArrowhead": "arrow",
+  "label": {
+   "text": "assume role (OIDC)",
+   "fontSize": 16
+  }
+ },
+ {
+  "type": "arrow",
+  "id": "msg13",
+  "x": 720,
+  "y": 975.0,
+  "width": 600,
+  "height": 0,
+  "points": [
+   [
+    0,
+    0
+   ],
+   [
+    600,
+    0
+   ]
+  ],
+  "endArrowhead": "arrow",
+  "label": {
+   "text": "credentials",
+   "fontSize": 16
+  },
+  "strokeStyle": "dashed"
+ },
+ {
+  "type": "arrow",
+  "id": "msg14",
+  "x": 1320,
+  "y": 1021.0,
+  "width": 200,
+  "height": 0,
+  "points": [
+   [
+    0,
+    0
+   ],
+   [
+    200,
+    0
+   ]
+  ],
+  "endArrowhead": "arrow",
+  "label": {
+   "text": "read state",
+   "fontSize": 16
+  }
+ },
+ {
+  "type": "arrow",
+  "id": "msg15",
+  "x": 1320,
+  "y": 1067.0,
+  "width": 400,
+  "height": 0,
+  "points": [
+   [
+    0,
+    0
+   ],
+   [
+    400,
+    0
+   ]
+  ],
+  "endArrowhead": "arrow",
+  "label": {
+   "text": "read objects",
+   "fontSize": 16
+  }
+ },
+ {
+  "type": "rectangle",
+  "id": "note16",
+  "x": 1225,
+  "y": 1094,
+  "width": 190,
+  "height": 56,
+  "roundness": {
+   "type": 3
+  },
+  "backgroundColor": "#fff3bf",
+  "fillStyle": "solid",
+  "strokeColor": "#f59e0b",
+  "label": {
+   "text": "fmt, validate, plan:\n1 to change",
+   "fontSize": 16
+  }
+ },
+ {
+  "type": "arrow",
+  "id": "msg17",
+  "x": 1320,
+  "y": 1177.0,
+  "width": 200,
+  "height": 0,
+  "points": [
+   [
+    0,
+    0
+   ],
+   [
+    -200,
+    0
+   ]
+  ],
+  "endArrowhead": "arrow",
+  "label": {
+   "text": "check ✓",
+   "fontSize": 16
+  },
+  "strokeStyle": "dashed"
+ },
+ {
+  "type": "arrow",
+  "id": "msg18",
+  "x": 120,
+  "y": 1223.0,
+  "width": 1000,
+  "height": 0,
+  "points": [
+   [
+    0,
+    0
+   ],
+   [
+    1000,
+    0
+   ]
+  ],
+  "endArrowhead": "arrow",
+  "label": {
+   "text": "merge",
+   "fontSize": 16
+  }
+ },
+ {
+  "type": "arrow",
+  "id": "msg19",
+  "x": 1120,
+  "y": 1315.0,
+  "width": 200,
+  "height": 0,
+  "points": [
+   [
+    0,
+    0
+   ],
+   [
+    200,
+    0
+   ]
+  ],
+  "endArrowhead": "arrow",
+  "label": {
+   "text": "main.yml",
+   "fontSize": 16
+  }
+ },
+ {
+  "type": "arrow",
+  "id": "msg20",
+  "x": 1320,
+  "y": 1361.0,
+  "width": 600,
+  "height": 0,
+  "points": [
+   [
+    0,
+    0
+   ],
+   [
+    -600,
+    0
+   ]
+  ],
+  "endArrowhead": "arrow",
+  "label": {
+   "text": "assume role (OIDC)",
+   "fontSize": 16
+  }
+ },
+ {
+  "type": "arrow",
+  "id": "msg21",
+  "x": 720,
+  "y": 1407.0,
+  "width": 600,
+  "height": 0,
+  "points": [
+   [
+    0,
+    0
+   ],
+   [
+    600,
+    0
+   ]
+  ],
+  "endArrowhead": "arrow",
+  "label": {
+   "text": "credentials",
+   "fontSize": 16
+  },
+  "strokeStyle": "dashed"
+ },
+ {
+  "type": "arrow",
+  "id": "msg22",
+  "x": 1320,
+  "y": 1453.0,
+  "width": 200,
+  "height": 0,
+  "points": [
+   [
+    0,
+    0
+   ],
+   [
+    200,
+    0
+   ]
+  ],
+  "endArrowhead": "arrow",
+  "label": {
+   "text": "lock, read state",
+   "fontSize": 16
+  }
+ },
+ {
+  "type": "arrow",
+  "id": "msg23",
+  "x": 1320,
+  "y": 1499.0,
+  "width": 400,
+  "height": 0,
+  "points": [
+   [
+    0,
+    0
+   ],
+   [
+    400,
+    0
+   ]
+  ],
+  "endArrowhead": "arrow",
+  "label": {
+   "text": "apply: image :1.1.0",
+   "fontSize": 16
+  }
+ },
+ {
+  "type": "arrow",
+  "id": "msg24",
+  "x": 1320,
+  "y": 1545.0,
+  "width": 200,
+  "height": 0,
+  "points": [
+   [
+    0,
+    0
+   ],
+   [
+    200,
+    0
+   ]
+  ],
+  "endArrowhead": "arrow",
+  "label": {
+   "text": "write state, unlock",
+   "fontSize": 16
+  }
+ },
+ {
+  "type": "arrow",
+  "id": "msg25",
+  "x": 1720,
+  "y": 1637.0,
+  "width": 800,
+  "height": 0,
+  "points": [
+   [
+    0,
+    0
+   ],
+   [
+    -800,
+    0
+   ]
+  ],
+  "endArrowhead": "arrow",
+  "label": {
+   "text": "nodes pull :1.1.0",
+   "fontSize": 16
+  }
+ },
+ {
+  "type": "rectangle",
+  "id": "note26",
+  "x": 1600,
+  "y": 1664,
+  "width": 190,
+  "height": 56,
+  "roundness": {
+   "type": 3
+  },
+  "backgroundColor": "#fff3bf",
+  "fillStyle": "solid",
+  "strokeColor": "#f59e0b",
+  "label": {
+   "text": "new Pod ready,\nold Pod goes; × 3",
+   "fontSize": 16
+  }
+ },
+ {
+  "type": "arrow",
+  "id": "msg27",
+  "x": 1720,
+  "y": 1747.0,
+  "width": 1600,
+  "height": 0,
+  "points": [
+   [
+    0,
+    0
+   ],
+   [
+    -1600,
+    0
+   ]
+  ],
+  "endArrowhead": "arrow",
+  "label": {
+   "text": "kubectl get pods -w",
+   "fontSize": 16
+  },
+  "strokeStyle": "dashed"
+ }
+]

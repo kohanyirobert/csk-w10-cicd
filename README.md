@@ -1,295 +1,335 @@
-# CI/CD for the code and for the infrastructure
+# CI/CD for service code and infrastructure code
 
-**DevOps Career Starter Kit** · Tuesday, 2026-11-10, 17:00–19:00
+DevOps CSK · 2026-11-10, 17:00–19:00
 
-On 11-03 a new image reached the cluster because someone edited a YAML and ran `kubectl apply` by
-hand. Today you build it end to end, from scratch: two repositories, each with its own pull-request
-checks and its own pipeline on `main`. At the end you change one word in the code and watch it
-roll out to your EKS cluster, and nobody types `kubectl apply`.
+Goal: a change in `service-code` reaches your EKS cluster through two pipelines: build and push the
+image, then deploy it with Terraform. No manual `kubectl apply`.
 
-| repo | template | what's in it |
+![Sequence: one change through both pipelines](diagram/sequence.svg)
+
+Editable: [`diagram/sequence.excalidraw`](diagram/sequence.excalidraw) (excalidraw.com → Open).
+
+## Repos
+
+| your repo | create it from template |
+|---|---|
+| `service-code` | https://github.com/kohanyirobert/csk-w10-service-code |
+| `infra-code` | https://github.com/kohanyirobert/csk-w10-infra-code |
+
+## Prerequisites
+
+- AWS CLI v2 logged in to `devops-csk2`, Terraform ≥ 1.10, Docker, `kubectl`, `uv`, a GitHub account.
+- Prefix every AWS resource with your name (shared account, IAM names are global).
+- Use your region (a region allows 5 VPCs):
+
+| name | region |
+|---|---|
+| andras | `eu-west-1` |
+| atilla | `eu-west-2` |
+| csepella | `eu-west-3` |
+| daniel | `eu-north-1` |
+| richard | `eu-central-1` |
+| gergely | `us-east-1` |
+| kris | `us-east-2` |
+| lorand | `us-west-1` |
+| szino | `us-west-2` |
+| robi (demo) | `eu-west-1` |
+
+## 0. Repos and state bucket
+
+Result: `<you>/service-code` and `<you>/infra-code` on GitHub, cloned; an S3 bucket for the state;
+`terraform init` works in `infra-code`.
+
+1. On both template pages: Use this template → Create a new repository, public, your account. Not
+   a fork: forks start with Actions disabled.
+2. Create the state bucket by hand, with versioning:
+   ```bash
+   aws s3api create-bucket --bucket <name>-csk-w10-tfstate --region <region> \
+     --create-bucket-configuration LocationConstraint=<region>
+   aws s3api put-bucket-versioning --bucket <name>-csk-w10-tfstate \
+     --versioning-configuration Status=Enabled
+   ```
+   In `us-east-1`, leave out `--create-bucket-configuration`.
+3. Replace the `CHANGE-ME`s in `infra-code/main.tf`, run `terraform init`.
+
+## 1. infra-code: EKS, ECR, GitHub roles
+
+Result: an EKS cluster with 2 nodes, an ECR repository, a `hello` namespace, two IAM roles for
+GitHub Actions. Applied from your laptop. No Deployment, no workflow yet.
+
+The cluster takes ~15 minutes: start `terraform apply`, do step 2 meanwhile. If `apply` times out,
+run it again: it continues where it stopped.
+
+Suggested files:
+
+### `main.tf` (given)
+
+- Backend values are literals: a `backend` block can't use variables.
+- `provider "aws"`: no `profile`. On your laptop `export AWS_PROFILE=...`; on the runner the
+  credentials come from the OIDC login. A hard-coded profile breaks the pipeline.
+- Optional: `default_tags { tags = { owner = "<name>" } }` tags everything the provider creates.
+
+### `variables.tf`, `terraform.tfvars`
+
+- `name`, `region`, `github_owner`. Commit `terraform.tfvars`: nothing in it is secret, and the
+  runner needs the same values.
+
+### `network.tf`
+
+- `aws_vpc` `10.0.0.0/16` with `enable_dns_support` and `enable_dns_hostnames` = `true`. Without
+  DNS, nodes can't join the cluster.
+- 2 subnets in 2 different AZs: EKS refuses a cluster in one AZ.
+  `data "aws_availability_zones" "available" { state = "available" }`, take the first two with
+  `slice(...names, 0, 2)`. Subnet CIDRs: `cidrsubnet(aws_vpc.this.cidr_block, 8, count.index)`.
+- `map_public_ip_on_launch = true`. There is no NAT gateway, so a node without a public IP can't
+  reach the EKS API or ECR: the node group fails with `NodeCreationFailure`.
+- `aws_internet_gateway`, `aws_route_table` with `0.0.0.0/0` → gateway, and an
+  `aws_route_table_association` for **each** subnet. A missing association is the same failure.
+
+### `eks.tf`
+
+- Cluster role: trust `eks.amazonaws.com` with actions `sts:AssumeRole` and `sts:TagSession`; attach
+  `AmazonEKSClusterPolicy`.
+- `aws_eks_cluster`: `vpc_config.subnet_ids` = both subnets;
+  `depends_on` the policy attachment, or on destroy the role loses its policy before the cluster is
+  gone.
+- `access_config { authentication_mode = "API", bootstrap_cluster_creator_admin_permissions = true }`:
+  whoever runs the first `apply` becomes cluster admin. That must be you, from the laptop. Changing
+  it later replaces the cluster.
+- Leave out `version`: you get the current default.
+- Node role: trust `ec2.amazonaws.com`, attach `AmazonEKSWorkerNodePolicy`, `AmazonEKS_CNI_Policy`,
+  `AmazonEC2ContainerRegistryReadOnly` (without the last one: `ImagePullBackOff` in step 4).
+- `aws_eks_node_group`: `t3.medium`, `scaling_config` min 1, desired 2, max 3; `depends_on` the node
+  policy attachments and the route table associations (nodes need the internet to join, and on
+  destroy the routes must outlive the nodes).
+- IAM role names are global in the account: `<name>-eks-cluster`, `<name>-eks-node`.
+
+### `ecr.tf`
+
+- `aws_ecr_repository` `<name>/hello`. The `/` is fine, it's only part of the name.
+- `image_tag_mutability = "IMMUTABLE"`: a tag can be pushed once. Every release needs a new version.
+- `force_delete = true`, or `destroy` fails while images are in it.
+
+### `github-oidc.tf`
+
+How it works: every workflow run can ask GitHub for a signed token (needs `id-token: write` in the
+workflow). AWS checks the signature against the account's OIDC provider, then checks the role's
+trust policy against the token's claims, and returns credentials valid for an hour.
+
+- The provider exists once per account, and `devops-csk2` has it. Use
+  `data "aws_iam_openid_connect_provider" "github" { url = "https://token.actions.githubusercontent.com" }`.
+  A `resource` fails with `EntityAlreadyExists`, and destroying it would break everyone.
+- Write trust policies with `data "aws_iam_policy_document"`:
+  - action `sts:AssumeRoleWithWebIdentity`, principal `Federated` = the provider's ARN;
+  - `StringEquals` `token.actions.githubusercontent.com:aud` = `sts.amazonaws.com`;
+  - `StringEquals` `token.actions.githubusercontent.com:sub` = the allowed values.
+- `sub` depends on the event: a push to `main` is `repo:<owner>/<repo>:ref:refs/heads/main`, a pull
+  request is `repo:<owner>/<repo>:pull_request`. Owner and repo exactly as on GitHub. Don't use
+  `StringLike` with `*`: `repo:*` lets any GitHub repo in.
+
+| role | allowed `sub` | permissions |
 |---|---|---|
-| `service-code` | [kohanyirobert/csk-w10-service-code](https://github.com/kohanyirobert/csk-w10-service-code) | a Flask app with tests, two workflows that do nothing yet |
-| `infra-code` | [kohanyirobert/csk-w10-infra-code](https://github.com/kohanyirobert/csk-w10-infra-code) | `main.tf` with providers and an S3 backend, two workflows that do nothing yet |
+| `<name>-gha-service` | `repo:<you>/service-code:ref:refs/heads/main` | `ecr:GetAuthorizationToken` on `*`; `ecr:BatchCheckLayerAvailability`, `ecr:InitiateLayerUpload`, `ecr:UploadLayerPart`, `ecr:CompleteLayerUpload`, `ecr:PutImage`, `ecr:BatchGetImage`, `ecr:GetDownloadUrlForLayer` on your repo's ARN |
+| `<name>-gha-infra` | `repo:<you>/infra-code:pull_request`, `repo:<you>/infra-code:ref:refs/heads/main` | `AdministratorAccess` (it applies this whole configuration: VPC, EKS, IAM) |
 
-The steps say **what has to exist when**. How you build it is up to you: the hints are folded,
-open them when you're stuck.
+- IAM lets the infra role into AWS, not into Kubernetes. Add `aws_eks_access_entry` for the role and
+  `aws_eks_access_policy_association` with
+  `arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy`, `access_scope { type = "cluster" }`.
+  Without it the runner's plan fails with `Unauthorized`.
 
-## Before you start
+### `k8s.tf`
 
-- AWS CLI v2 logged in to the `devops-csk2` account, Terraform ≥ 1.10, Docker, `kubectl`, `uv`,
-  a GitHub account.
-- **Your region and your name.** Everyone works in their own region (a region allows only 5 VPCs).
-  Prefix everything you create with your name: the account is shared and IAM names are global.
+- `kubernetes` provider, logging in like `kubectl`:
+  ```hcl
+  provider "kubernetes" {
+    host                   = aws_eks_cluster.this.endpoint
+    cluster_ca_certificate = base64decode(aws_eks_cluster.this.certificate_authority[0].data)
+    exec {
+      api_version = "client.authentication.k8s.io/v1beta1"
+      command     = "aws"
+      args        = ["eks", "get-token", "--cluster-name", aws_eks_cluster.this.name, "--region", var.region]
+    }
+  }
+  ```
+- `exec` runs the `aws` CLI: it must be installed wherever Terraform runs, with the same
+  credentials.
+- `kubernetes_namespace_v1` `hello`. It can be in the same first `apply` as the cluster.
 
-  | name | region | name | region |
-  |---|---|---|---|
-  | andras | `eu-west-2` | kris | `us-west-2` |
-  | atilla | `eu-west-3` | lorand | `ca-central-1` |
-  | csepella | `eu-north-1` | richard | `us-west-1` |
-  | daniel | `sa-east-1` | szino | `ap-south-1` |
-  | gergely | `us-east-2` | robi (demo) | `eu-west-1` |
+### `outputs.tf`
 
-## 0. Your two repos and a state bucket
+- `service_role_arn`, `infra_role_arn`, `ecr_repository_url`: they go into the repo variables.
+- Handy: the `aws eks update-kubeconfig --name ... --region ...` command as an output.
 
-**Have at the end:** `<you>/service-code` and `<you>/infra-code` on GitHub, cloned; an S3 bucket
-for the Terraform state; `terraform init` works in infra-code.
-
-- On both template pages: **Use this template → Create a new repository**, public, under your own
-  account. (Not a fork: in a fork Actions start disabled.)
-- Create the bucket by hand. It can't be in the Terraform that stores its state in it.
-- Fill in the `CHANGE-ME`s in `infra-code/main.tf`, `terraform init`.
-
-<details>
-<summary>Hints</summary>
+Check:
 
 ```bash
-aws s3api create-bucket --bucket <name>-csk-w10-tfstate --region <region> \
-  --create-bucket-configuration LocationConstraint=<region>
-aws s3api put-bucket-versioning --bucket <name>-csk-w10-tfstate \
-  --versioning-configuration Status=Enabled
+aws eks update-kubeconfig --name <cluster> --region <region>
+kubectl get nodes      # 2 Ready
+kubectl get ns hello
 ```
 
-Versioning: a broken state can be rolled back. `use_lockfile = true` in the backend: two `apply`s at
-once (you and the runner) can't both write.
-</details>
+## 2. service-code: Dockerfile and workflows
 
-## 1. infra-code: EKS, ECR and the GitHub roles (no Deployment yet)
+Result: a `Dockerfile`; `pr.yml` runs the tests and builds the image on PRs to `main`; `main.yml`
+runs the tests, builds the image, tags it with the version from `pyproject.toml` and pushes it to
+ECR, on pushes to `main`.
 
-**Have at the end:** a running EKS cluster with 2 nodes, an ECR repository, a `hello` namespace,
-and two IAM roles GitHub Actions can assume. Applied from your laptop. No workflow yet.
+Add them on a branch, open a PR, merge. The `main.yml` run fails at the AWS login until step 1 is
+done.
 
-EKS takes about 15 minutes: `apply` early, do step 2 while it runs.
+Dockerfile:
 
-<details>
-<summary>Hints: network and cluster</summary>
+- `FROM python:3.13-slim`, `COPY --from=ghcr.io/astral-sh/uv:0.11 /uv /bin/`.
+- Copy `pyproject.toml` and `uv.lock`, `RUN uv sync --locked --no-install-project`, then copy
+  `app.py`.
+- Port 8080. `STOPSIGNAL SIGINT` (Python as PID 1 ignores `SIGTERM`: Pods would take 30 s to stop).
+- Building on an ARM Mac: `docker build --platform linux/amd64`.
 
-- A VPC with two public subnets in two AZs (EKS wants at least two), an internet gateway, a route
-  table with `0.0.0.0/0` to it, `map_public_ip_on_launch = true`. Nodes in public subnets: no NAT
-  gateway needed. Take the AZs from `data "aws_availability_zones"`.
-- `aws_eks_cluster` needs a role with `AmazonEKSClusterPolicy`. Set
-  `access_config { authentication_mode = "API", bootstrap_cluster_creator_admin_permissions = true }`:
-  you, who run the apply, become cluster admin.
-- `aws_eks_node_group`: 2 × `t3.medium`, a role with `AmazonEKSWorkerNodePolicy`,
-  `AmazonEKS_CNI_Policy` and **`AmazonEC2ContainerRegistryReadOnly`** (or the nodes can't pull
-  your image).
-- Load balancers, Ingress, add-ons: not today.
-</details>
+Workflows:
 
-<details>
-<summary>Hints: ECR</summary>
-
-`aws_ecr_repository` named `<name>/hello`, `image_tag_mutability = "IMMUTABLE"`: a tag can be
-pushed once, so `1.0.0` always means the same image. `force_delete = true` lets `destroy` remove it
-with the images in it.
-</details>
-
-<details>
-<summary>Hints: GitHub → AWS without access keys (OIDC)</summary>
-
-- GitHub gives every workflow run a signed token. AWS checks it against an **OIDC provider** and
-  hands out short-lived credentials for a role whose **trust policy** accepts that token.
-- The provider exists once per account and `devops-csk2` already has it: use
-  `data "aws_iam_openid_connect_provider"` with `url = "https://token.actions.githubusercontent.com"`.
-  A `resource` fails with *EntityAlreadyExists*.
-- Trust policy: `sts:AssumeRoleWithWebIdentity`, condition on
-  `token.actions.githubusercontent.com:aud = sts.amazonaws.com` and on `...:sub`, which says which
-  repo and which branch or event:
-
-  | role | allowed `sub` | permissions |
-  |---|---|---|
-  | `<name>-gha-service` | `repo:<you>/service-code:ref:refs/heads/main` | push to your ECR repo (and `ecr:GetAuthorizationToken` on `*`) |
-  | `<name>-gha-infra` | `repo:<you>/infra-code:pull_request`, `repo:<you>/infra-code:ref:refs/heads/main` | `AdministratorAccess`: it applies this same code, VPC, EKS, IAM and all |
-
-- The infra role must also get into **Kubernetes**: `aws_eks_access_entry` +
-  `aws_eks_access_policy_association` with `AmazonEKSClusterAdminPolicy`. Without it, the runner's
-  plan says *Unauthorized*.
-</details>
-
-<details>
-<summary>Hints: the namespace from Terraform</summary>
-
-The `kubernetes` provider logs in the same way `kubectl` does:
-
-```hcl
-provider "kubernetes" {
-  host                   = aws_eks_cluster.this.endpoint
-  cluster_ca_certificate = base64decode(aws_eks_cluster.this.certificate_authority[0].data)
-  exec {
-    api_version = "client.authentication.k8s.io/v1beta1"
-    command     = "aws"
-    args        = ["eks", "get-token", "--cluster-name", aws_eks_cluster.this.name, "--region", "<region>"]
-  }
-}
-```
-
-Then `kubernetes_namespace_v1` named `hello`. Outputs worth having: both role ARNs, the ECR URL.
-</details>
-
-**Check:**
-`aws eks update-kubeconfig --name <cluster> --region <region>`, `kubectl get nodes` (2 Ready),
-`kubectl get ns hello`.
-
-## 2. service-code: the workflows (while EKS is being created)
-
-**Have at the end:** a `Dockerfile`; `pr.yml` runs the tests and builds the image on every PR;
-`main.yml` runs the tests, then builds the image and pushes it to ECR, tagged with the version
-from `pyproject.toml`.
-
-Work on a branch, open a PR: the PR checks run on the PR that adds them. Merge it. `main.yml` will
-fail at the AWS login: the role doesn't exist yet. That's expected, step 3 fixes it.
-
-<details>
-<summary>Hints: the Dockerfile</summary>
-
-- `FROM python:3.13-slim`, copy `uv` in: `COPY --from=ghcr.io/astral-sh/uv:0.11 /uv /bin/`.
-- Copy `pyproject.toml` and `uv.lock` first, `uv sync --locked --no-install-project`, then
-  `app.py`. Change only `app.py` and rebuild: which layers are cached?
-- Port 8080. `STOPSIGNAL SIGINT`: Python as PID 1 ignores `SIGTERM`, so without it every old Pod
-  hangs 30 seconds in `Terminating`.
-- ARM Mac building by hand: `--platform linux/amd64`, the nodes are x86.
-</details>
-
-<details>
-<summary>Hints: the tests on the runner</summary>
-
-`actions/checkout@v7`, `astral-sh/setup-uv@v10`, then `uv run python -m unittest -v`.
-</details>
-
-<details>
-<summary>Hints: AWS login, ECR, the version</summary>
-
-```yaml
-permissions:
-  contents: read
-  id-token: write          # without this GitHub gives the job no OIDC token
-steps:
-  - uses: aws-actions/configure-aws-credentials@v6
-    with:
-      role-to-assume: ${{ vars.AWS_ROLE_ARN }}
-      aws-region: ${{ vars.AWS_REGION }}
-  - uses: aws-actions/amazon-ecr-login@v2
-```
-
-- Repo **variables**, not secrets (Settings → Secrets and variables → Actions → Variables):
-  `AWS_REGION`, `AWS_ROLE_ARN`, `ECR_REPOSITORY_URL`. None of them is secret: without the trust
-  policy the role ARN is useless.
-- The version, from one step to the next:
+- Tests: `actions/checkout@v7`, `astral-sh/setup-uv@v10`, `uv run python -m unittest -v`.
+- AWS login:
+  ```yaml
+  permissions:
+    contents: read
+    id-token: write
+  steps:
+    - uses: aws-actions/configure-aws-credentials@v6
+      with:
+        role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+        aws-region: ${{ vars.AWS_REGION }}
+    - uses: aws-actions/amazon-ecr-login@v2
+  ```
+- Repo variables (Settings → Secrets and variables → Actions → Variables): `AWS_REGION`,
+  `AWS_ROLE_ARN` (service role), `ECR_REPOSITORY_URL`.
+- Version as a step output:
   ```yaml
   - id: version
     run: echo "version=$(uv version --short)" >> "$GITHUB_OUTPUT"
-  - run: echo "${{ steps.version.outputs.version }}"
   ```
-- The tag is the version: `<ECR_REPOSITORY_URL>:1.0.0`. Never `latest`.
-</details>
+  Use it as `${{ steps.version.outputs.version }}`. Image: `<ECR_REPOSITORY_URL>:<version>`.
+  Never `latest`.
 
 ## 3. service-code → ECR
 
-**Have at the end:** `hello:1.0.0` in your ECR repository, pushed by GitHub Actions.
+Result: `hello:1.0.0` in your ECR repository, pushed by GitHub Actions.
 
-- When step 1's apply is done: set the repo variables from its outputs, then **Re-run failed jobs**
-  on the failed `main.yml` run.
+1. Set the service-code repo variables from step 1's outputs.
+2. Actions → the failed `main.yml` run → Re-run failed jobs.
 
-**Check:** `aws ecr list-images --repository-name <name>/hello --region <region>`.
+Check:
 
-<details>
-<summary>Hints: it still fails</summary>
-
-- *Not authorized to perform sts:AssumeRoleWithWebIdentity*: the `sub` in the trust policy doesn't
-  match. Repo name, owner, branch: exactly. Missing `id-token: write`?
-- *tag invalid … already exists*: immutable tags; bump the version.
-</details>
-
-## 4. infra-code: the Deployment, applied by hand
-
-**Have at the end:** a Deployment `hello` in namespace `hello`, managed by Terraform, running the
-image tag that's in ECR. Applied from your laptop.
-
-- Write the Deployment as YAML in `k8s/deployment.yaml` (3 replicas, image
-  `<ECR_REPOSITORY_URL>:1.0.0`, port 8080), and let Terraform read it.
-
-<details>
-<summary>Hints</summary>
-
-```hcl
-resource "kubernetes_manifest" "deployment" {
-  manifest   = yamldecode(file("${path.module}/k8s/deployment.yaml"))
-  depends_on = [kubernetes_namespace_v1.hello]
-}
+```bash
+aws ecr list-images --repository-name <name>/hello --region <region>
 ```
 
-- A `readinessProbe` on `/` port 8080: a Pod gets traffic, and the rollout moves on, only when the
-  app answers.
-- `strategy.rollingUpdate: { maxSurge: 1, maxUnavailable: 0 }`: one new Pod at a time; you'll see it
-  in step 6.
-- Pods in `ImagePullBackOff`: the node role lacks `AmazonEC2ContainerRegistryReadOnly`, or the tag
-  isn't in ECR.
-- `kubernetes_manifest` asks the cluster's API already at **plan** time. That's why it comes only
-  now, when the cluster exists: in step 1's first plan it would fail.
-</details>
+If it fails:
 
-**Check:**
+- `Not authorized to perform sts:AssumeRoleWithWebIdentity`: the `sub` doesn't match (owner, repo,
+  branch), or `id-token: write` is missing.
+- `tag ... already exists`: tags are immutable, bump the version.
+
+## 4. infra-code: Deployment, applied by hand
+
+Result: Deployment `hello` in namespace `hello`, managed by Terraform, running the image from ECR.
+Applied from your laptop.
+
+### `k8s/deployment.yaml`
+
+- `apiVersion: apps/v1`, `kind: Deployment`, `metadata.name: hello`, `metadata.namespace: hello`.
+- 3 replicas; `selector.matchLabels` must equal the Pod template's labels (`app: hello`).
+- Image `<ECR_REPOSITORY_URL>:1.0.0`: a tag that is in ECR. Container port 8080.
+- `readinessProbe` HTTP GET `/` on 8080: a new Pod gets traffic, and the rollout continues, only
+  when the app answers.
+- `strategy.rollingUpdate`: `maxSurge: 1`, `maxUnavailable: 0`: one new Pod at a time, an old one
+  goes only when a new one is ready.
+
+### `k8s.tf`
+
+- Terraform reads the YAML:
+  ```hcl
+  resource "kubernetes_manifest" "deployment" {
+    manifest   = yamldecode(file("${path.module}/k8s/deployment.yaml"))
+    depends_on = [kubernetes_namespace_v1.hello]
+  }
+  ```
+- `kubernetes_manifest` needs the cluster API already at plan time. That's why it comes now, not in
+  step 1.
+- One YAML document per file: `yamldecode` doesn't read `---`-separated documents.
+- `ImagePullBackOff`: the node role lacks `AmazonEC2ContainerRegistryReadOnly`, or the tag isn't in
+  ECR. `exec format error` in the logs: an ARM image.
+
+Check (the image has Python, no `curl`):
 
 ```bash
 kubectl -n hello get deploy,pods
 kubectl -n hello exec deploy/hello -- python -c \
   "import urllib.request; print(urllib.request.urlopen('http://localhost:8080').read())"
-kubectl -n hello port-forward deploy/hello 8080:8080   # then, elsewhere: curl localhost:8080
+kubectl -n hello port-forward deploy/hello 8080:8080   # other terminal: curl localhost:8080
 ```
 
-The image has no `curl`; it has Python.
+## 5. infra-code: workflows
 
-## 5. infra-code: the workflows
+Result: `pr.yml` runs `terraform fmt -check`, `init`, `validate`, `plan` on PRs to `main`;
+`main.yml` runs the same plus `apply` without approval, on pushes to `main`.
 
-**Have at the end:** `pr.yml` runs `terraform fmt -check`, `init`, `validate`, `plan` on every PR;
-`main.yml` does the same and then `apply`, without asking.
+1. Set the repo variables: `AWS_REGION`, `AWS_ROLE_ARN` (the **infra** role).
+2. Add the workflows on a branch, PR, merge. The first `main.yml` run changes nothing.
+3. Test: `replicas: 3` → `5` in `k8s/deployment.yaml` on a branch, PR, read the plan, merge, watch
+   the new Pods.
 
-- Add the workflows on a branch, PR, merge. The first `main.yml` run should change nothing.
-- Then test with a real change: `replicas: 3` → `5` in `k8s/deployment.yaml`, on a branch, PR. Read
-  the plan in the PR's check. Merge. Watch the Pods appear.
+From here on, apply only through `main`, not from your laptop.
 
-<details>
-<summary>Hints</summary>
+### `.github/workflows/pr.yml`
 
-- Repo variables: `AWS_REGION`, `AWS_ROLE_ARN` (the **infra** role).
-- Same AWS login as in service-code, then `hashicorp/setup-terraform@v4`. The AWS CLI is already on
-  `ubuntu-latest`; the kubernetes provider needs it for `aws eks get-token`.
-- `-input=false` everywhere: nobody is there to answer.
-- `terraform plan -out=tfplan`, then `terraform apply tfplan`: applies exactly what was planned, and
-  doesn't ask, because a saved plan is already approved.
-- Two merges close together: `concurrency: { group: apply, cancel-in-progress: false }` makes the
-  second run wait.
-- The state is in S3, so your laptop and the runner see the same thing. Don't apply from the laptop
-  any more: from now on `main` is the truth.
-- Plan says *Unauthorized* from Kubernetes: the infra role has no EKS access entry.
-</details>
+- `on: pull_request: branches: [main]`.
+- `permissions: { contents: read, id-token: write }`.
+- `actions/checkout@v7`, the same `aws-actions/configure-aws-credentials@v6` login as in
+  service-code, `hashicorp/setup-terraform@v4`.
+- `terraform fmt -check -recursive`, `terraform init -input=false`, `terraform validate`,
+  `terraform plan -input=false`.
+- `-input=false` everywhere: nobody is there to answer a prompt; without it a missing variable
+  hangs the job.
+- The AWS CLI is already on `ubuntu-latest`; the kubernetes provider needs it.
 
-## 6. The whole loop
+### `.github/workflows/main.yml`
 
-**Have at the end:** "Bye" in the cluster, and nothing done by hand except commits and merges.
+- `on: push: branches: [main]`, same permissions and steps.
+- `terraform plan -input=false -out=tfplan`, then `terraform apply -input=false tfplan`: applies
+  exactly what was planned, and a saved plan doesn't prompt.
+- `concurrency: { group: apply, cancel-in-progress: false }`: two merges in a row queue instead of
+  fighting for the state lock. Never cancel a running apply.
 
-0. Terminal, keep it open:
+If it fails:
+
+- `Not authorized to perform sts:AssumeRoleWithWebIdentity` on the PR: the infra role lacks the
+  `repo:<you>/infra-code:pull_request` `sub`.
+- `Unauthorized` from Kubernetes: the infra role has no EKS access entry.
+- `fmt -check` fails: run `terraform fmt -recursive` locally, commit.
+- State lock error: another run (or your laptop) is applying. Wait.
+
+## 6. The loop
+
+Result: the new code runs in the cluster; nothing done by hand except commits and merges.
+
+1. Terminal, keep open:
    ```bash
    kubectl -n hello get pods -w -o custom-columns='POD:.metadata.name,IMAGE:.spec.containers[0].image,READY:.status.containerStatuses[0].ready'
    ```
-1. **service-code**, branch: `Hello` → `Bye` in `app.py`. The PR check goes red: fix the test too.
-   Bump the version: `uv version --bump minor` (1.0.0 → 1.1.0). PR, green, merge.
-2. Wait for `main.yml`: `hello:1.1.0` in ECR.
-3. **infra-code**, branch: image tag `1.0.0` → `1.1.0` in `k8s/deployment.yaml`. PR: the plan shows
-   one change, the image. Merge.
-4. Wait for `main.yml`. In the terminal: a new Pod with `1.1.0`, ready, an old one goes; again and
-   again. `curl` says Bye.
+2. service-code, branch: `Hello` → `Bye` in `app.py` and `test_app.py`;
+   `uv version --bump minor` (1.0.0 → 1.1.0). PR, merge.
+3. Wait for `main.yml`: `hello:1.1.0` in ECR.
+4. infra-code, branch: image tag `1.0.0` → `1.1.0` in `k8s/deployment.yaml`. PR (the plan shows one
+   change), merge.
+5. Wait for `main.yml`. Terminal: Pods with `1.1.0` replace the old ones one by one. `curl` returns
+   `Bye`.
 
-**Try next:** a tag that was never pushed (`9.9.9`). What does the plan say, what does apply say,
-what does the terminal show? Is the app down? Fix it with another PR.
+Extra: set a tag that doesn't exist in ECR (`9.9.9`). Check the plan, the apply, the Pods, and
+whether the app still answers. Fix it with a PR.
 
 ## Clean up
 
-Today. A cluster with two nodes is about $0.20 an hour.
+Today. Cost: ~$0.20/hour per cluster.
 
-```bash
-cd infra-code && terraform destroy
-```
-
-Then the bucket: S3 console → the bucket → **Empty** (it deletes the old versions too; `aws s3 rb
---force` doesn't, and fails on a versioned bucket) → **Delete**.
+1. `terraform destroy` in `infra-code`.
+2. S3 console → your state bucket → Empty (removes old versions too) → Delete.
