@@ -14,7 +14,7 @@
   "y": 48,
   "fontSize": 17,
   "strokeColor": "#757575",
-  "text": "solid: request or action  ·  dashed: response  ·  yellow: work on the runner or in the cluster"
+  "text": "solid: request or action  ·  dashed: response  ·  yellow: work on your laptop, a runner or the cluster"
  },
  {
   "type": "rectangle",
@@ -22,7 +22,7 @@
   "x": 20,
   "y": 192,
   "width": 1800,
-  "height": 276,
+  "height": 340,
   "roundness": {
    "type": 3
   },
@@ -44,7 +44,7 @@
   "type": "rectangle",
   "id": "band1",
   "x": 20,
-  "y": 486,
+  "y": 550,
   "width": 1800,
   "height": 276,
   "roundness": {
@@ -60,7 +60,7 @@
   "type": "text",
   "id": "band1t",
   "x": 32,
-  "y": 492,
+  "y": 556,
   "text": "2  service-code: push to main",
   "fontSize": 18
  },
@@ -68,9 +68,9 @@
   "type": "rectangle",
   "id": "band2",
   "x": 20,
-  "y": 780,
+  "y": 844,
   "width": 1800,
-  "height": 460,
+  "height": 524,
   "roundness": {
    "type": 3
   },
@@ -84,7 +84,7 @@
   "type": "text",
   "id": "band2t",
   "x": 32,
-  "y": 786,
+  "y": 850,
   "text": "3  infra-code: pull request",
   "fontSize": 18
  },
@@ -92,7 +92,7 @@
   "type": "rectangle",
   "id": "band3",
   "x": 20,
-  "y": 1258,
+  "y": 1386,
   "width": 1800,
   "height": 304,
   "roundness": {
@@ -108,7 +108,7 @@
   "type": "text",
   "id": "band3t",
   "x": 32,
-  "y": 1264,
+  "y": 1392,
   "text": "4  infra-code: push to main",
   "fontSize": 18
  },
@@ -116,7 +116,7 @@
   "type": "rectangle",
   "id": "band4",
   "x": 20,
-  "y": 1580,
+  "y": 1708,
   "width": 1800,
   "height": 196,
   "roundness": {
@@ -132,7 +132,7 @@
   "type": "text",
   "id": "band4t",
   "x": 32,
-  "y": 1586,
+  "y": 1714,
   "text": "5  rollout",
   "fontSize": 18
  },
@@ -160,7 +160,7 @@
   "x": 120,
   "y": 154,
   "width": 0,
-  "height": 1646,
+  "height": 1774,
   "points": [
    [
     0,
@@ -168,7 +168,7 @@
    ],
    [
     0,
-    1646
+    1774
    ]
   ],
   "strokeColor": "#868e96",
@@ -199,7 +199,7 @@
   "x": 320,
   "y": 154,
   "width": 0,
-  "height": 1646,
+  "height": 1774,
   "points": [
    [
     0,
@@ -207,7 +207,7 @@
    ],
    [
     0,
-    1646
+    1774
    ]
   ],
   "strokeColor": "#868e96",
@@ -238,7 +238,7 @@
   "x": 520,
   "y": 154,
   "width": 0,
-  "height": 1646,
+  "height": 1774,
   "points": [
    [
     0,
@@ -246,7 +246,7 @@
    ],
    [
     0,
-    1646
+    1774
    ]
   ],
   "strokeColor": "#868e96",
@@ -277,7 +277,7 @@
   "x": 720,
   "y": 154,
   "width": 0,
-  "height": 1646,
+  "height": 1774,
   "points": [
    [
     0,
@@ -285,7 +285,7 @@
    ],
    [
     0,
-    1646
+    1774
    ]
   ],
   "strokeColor": "#868e96",
@@ -316,7 +316,7 @@
   "x": 920,
   "y": 154,
   "width": 0,
-  "height": 1646,
+  "height": 1774,
   "points": [
    [
     0,
@@ -324,7 +324,7 @@
    ],
    [
     0,
-    1646
+    1774
    ]
   ],
   "strokeColor": "#868e96",
@@ -355,7 +355,7 @@
   "x": 1120,
   "y": 154,
   "width": 0,
-  "height": 1646,
+  "height": 1774,
   "points": [
    [
     0,
@@ -363,7 +363,7 @@
    ],
    [
     0,
-    1646
+    1774
    ]
   ],
   "strokeColor": "#868e96",
@@ -394,7 +394,7 @@
   "x": 1320,
   "y": 154,
   "width": 0,
-  "height": 1646,
+  "height": 1774,
   "points": [
    [
     0,
@@ -402,7 +402,7 @@
    ],
    [
     0,
-    1646
+    1774
    ]
   ],
   "strokeColor": "#868e96",
@@ -433,7 +433,7 @@
   "x": 1520,
   "y": 154,
   "width": 0,
-  "height": 1646,
+  "height": 1774,
   "points": [
    [
     0,
@@ -441,7 +441,7 @@
    ],
    [
     0,
-    1646
+    1774
    ]
   ],
   "strokeColor": "#868e96",
@@ -472,7 +472,7 @@
   "x": 1720,
   "y": 154,
   "width": 0,
-  "height": 1646,
+  "height": 1774,
   "points": [
    [
     0,
@@ -480,7 +480,7 @@
    ],
    [
     0,
-    1646
+    1774
    ]
   ],
   "strokeColor": "#868e96",
@@ -488,10 +488,28 @@
   "strokeWidth": 1
  },
  {
+  "type": "rectangle",
+  "id": "note0",
+  "x": 30,
+  "y": 230,
+  "width": 220,
+  "height": 56,
+  "roundness": {
+   "type": 3
+  },
+  "backgroundColor": "#fff3bf",
+  "fillStyle": "solid",
+  "strokeColor": "#f59e0b",
+  "label": {
+   "text": "edit app.py: Hello → Bye,\nversion 1.0.0 → 1.1.0",
+   "fontSize": 16
+  }
+ },
+ {
   "type": "arrow",
-  "id": "msg0",
+  "id": "msg1",
   "x": 120,
-  "y": 249.0,
+  "y": 313.0,
   "width": 200,
   "height": 0,
   "points": [
@@ -506,15 +524,15 @@
   ],
   "endArrowhead": "arrow",
   "label": {
-   "text": "push, open PR",
+   "text": "push branch, open PR",
    "fontSize": 16
   }
  },
  {
   "type": "arrow",
-  "id": "msg1",
+  "id": "msg2",
   "x": 320,
-  "y": 295.0,
+  "y": 359.0,
   "width": 200,
   "height": 0,
   "points": [
@@ -535,10 +553,10 @@
  },
  {
   "type": "rectangle",
-  "id": "note2",
-  "x": 425,
-  "y": 322,
-  "width": 190,
+  "id": "note3",
+  "x": 410,
+  "y": 386,
+  "width": 220,
   "height": 56,
   "roundness": {
    "type": 3
@@ -553,9 +571,9 @@
  },
  {
   "type": "arrow",
-  "id": "msg3",
+  "id": "msg4",
   "x": 520,
-  "y": 405.0,
+  "y": 469.0,
   "width": 200,
   "height": 0,
   "points": [
@@ -577,9 +595,9 @@
  },
  {
   "type": "arrow",
-  "id": "msg4",
+  "id": "msg5",
   "x": 120,
-  "y": 451.0,
+  "y": 515.0,
   "width": 200,
   "height": 0,
   "points": [
@@ -600,9 +618,9 @@
  },
  {
   "type": "arrow",
-  "id": "msg5",
+  "id": "msg6",
   "x": 320,
-  "y": 543.0,
+  "y": 607.0,
   "width": 200,
   "height": 0,
   "points": [
@@ -623,10 +641,10 @@
  },
  {
   "type": "rectangle",
-  "id": "note6",
-  "x": 425,
-  "y": 570,
-  "width": 190,
+  "id": "note7",
+  "x": 410,
+  "y": 634,
+  "width": 220,
   "height": 56,
   "roundness": {
    "type": 3
@@ -641,9 +659,9 @@
  },
  {
   "type": "arrow",
-  "id": "msg7",
+  "id": "msg8",
   "x": 520,
-  "y": 653.0,
+  "y": 717.0,
   "width": 200,
   "height": 0,
   "points": [
@@ -664,9 +682,9 @@
  },
  {
   "type": "arrow",
-  "id": "msg8",
+  "id": "msg9",
   "x": 720,
-  "y": 699.0,
+  "y": 763.0,
   "width": 200,
   "height": 0,
   "points": [
@@ -688,9 +706,9 @@
  },
  {
   "type": "arrow",
-  "id": "msg9",
+  "id": "msg10",
   "x": 520,
-  "y": 745.0,
+  "y": 809.0,
   "width": 400,
   "height": 0,
   "points": [
@@ -710,10 +728,28 @@
   }
  },
  {
+  "type": "rectangle",
+  "id": "note11",
+  "x": 30,
+  "y": 882,
+  "width": 220,
+  "height": 56,
+  "roundness": {
+   "type": 3
+  },
+  "backgroundColor": "#fff3bf",
+  "fillStyle": "solid",
+  "strokeColor": "#f59e0b",
+  "label": {
+   "text": "edit k8s/deployment.yaml:\nimage tag 1.0.0 → 1.1.0",
+   "fontSize": 16
+  }
+ },
+ {
   "type": "arrow",
-  "id": "msg10",
+  "id": "msg12",
   "x": 120,
-  "y": 837.0,
+  "y": 965.0,
   "width": 1000,
   "height": 0,
   "points": [
@@ -728,15 +764,15 @@
   ],
   "endArrowhead": "arrow",
   "label": {
-   "text": "branch: tag 1.0.0 → 1.1.0, open PR",
+   "text": "push branch, open PR",
    "fontSize": 16
   }
  },
  {
   "type": "arrow",
-  "id": "msg11",
+  "id": "msg13",
   "x": 1120,
-  "y": 883.0,
+  "y": 1011.0,
   "width": 200,
   "height": 0,
   "points": [
@@ -757,9 +793,9 @@
  },
  {
   "type": "arrow",
-  "id": "msg12",
+  "id": "msg14",
   "x": 1320,
-  "y": 929.0,
+  "y": 1057.0,
   "width": 600,
   "height": 0,
   "points": [
@@ -780,9 +816,9 @@
  },
  {
   "type": "arrow",
-  "id": "msg13",
+  "id": "msg15",
   "x": 720,
-  "y": 975.0,
+  "y": 1103.0,
   "width": 600,
   "height": 0,
   "points": [
@@ -804,9 +840,9 @@
  },
  {
   "type": "arrow",
-  "id": "msg14",
+  "id": "msg16",
   "x": 1320,
-  "y": 1021.0,
+  "y": 1149.0,
   "width": 200,
   "height": 0,
   "points": [
@@ -827,9 +863,9 @@
  },
  {
   "type": "arrow",
-  "id": "msg15",
+  "id": "msg17",
   "x": 1320,
-  "y": 1067.0,
+  "y": 1195.0,
   "width": 400,
   "height": 0,
   "points": [
@@ -850,10 +886,10 @@
  },
  {
   "type": "rectangle",
-  "id": "note16",
-  "x": 1225,
-  "y": 1094,
-  "width": 190,
+  "id": "note18",
+  "x": 1210,
+  "y": 1222,
+  "width": 220,
   "height": 56,
   "roundness": {
    "type": 3
@@ -868,9 +904,9 @@
  },
  {
   "type": "arrow",
-  "id": "msg17",
+  "id": "msg19",
   "x": 1320,
-  "y": 1177.0,
+  "y": 1305.0,
   "width": 200,
   "height": 0,
   "points": [
@@ -892,9 +928,9 @@
  },
  {
   "type": "arrow",
-  "id": "msg18",
+  "id": "msg20",
   "x": 120,
-  "y": 1223.0,
+  "y": 1351.0,
   "width": 1000,
   "height": 0,
   "points": [
@@ -915,9 +951,9 @@
  },
  {
   "type": "arrow",
-  "id": "msg19",
+  "id": "msg21",
   "x": 1120,
-  "y": 1315.0,
+  "y": 1443.0,
   "width": 200,
   "height": 0,
   "points": [
@@ -938,9 +974,9 @@
  },
  {
   "type": "arrow",
-  "id": "msg20",
+  "id": "msg22",
   "x": 1320,
-  "y": 1361.0,
+  "y": 1489.0,
   "width": 600,
   "height": 0,
   "points": [
@@ -961,9 +997,9 @@
  },
  {
   "type": "arrow",
-  "id": "msg21",
+  "id": "msg23",
   "x": 720,
-  "y": 1407.0,
+  "y": 1535.0,
   "width": 600,
   "height": 0,
   "points": [
@@ -985,9 +1021,9 @@
  },
  {
   "type": "arrow",
-  "id": "msg22",
+  "id": "msg24",
   "x": 1320,
-  "y": 1453.0,
+  "y": 1581.0,
   "width": 200,
   "height": 0,
   "points": [
@@ -1008,9 +1044,9 @@
  },
  {
   "type": "arrow",
-  "id": "msg23",
+  "id": "msg25",
   "x": 1320,
-  "y": 1499.0,
+  "y": 1627.0,
   "width": 400,
   "height": 0,
   "points": [
@@ -1031,9 +1067,9 @@
  },
  {
   "type": "arrow",
-  "id": "msg24",
+  "id": "msg26",
   "x": 1320,
-  "y": 1545.0,
+  "y": 1673.0,
   "width": 200,
   "height": 0,
   "points": [
@@ -1054,9 +1090,9 @@
  },
  {
   "type": "arrow",
-  "id": "msg25",
+  "id": "msg27",
   "x": 1720,
-  "y": 1637.0,
+  "y": 1765.0,
   "width": 800,
   "height": 0,
   "points": [
@@ -1077,10 +1113,10 @@
  },
  {
   "type": "rectangle",
-  "id": "note26",
-  "x": 1600,
-  "y": 1664,
-  "width": 190,
+  "id": "note28",
+  "x": 1570,
+  "y": 1792,
+  "width": 220,
   "height": 56,
   "roundness": {
    "type": 3
@@ -1095,9 +1131,9 @@
  },
  {
   "type": "arrow",
-  "id": "msg27",
+  "id": "msg29",
   "x": 1720,
-  "y": 1747.0,
+  "y": 1875.0,
   "width": 1600,
   "height": 0,
   "points": [

@@ -29,7 +29,8 @@ WIDTH = X0 * 2 + STEP * (len(COLS) - 1)
 # (kind, ...) rows, top to bottom. "phase" starts a band.
 ROWS = [
     ("phase", "1  service-code: pull request", "blue"),
-    ("msg", "you", "svc", "push, open PR"),
+    ("note", "you", "edit app.py: Hello → Bye,\nversion 1.0.0 → 1.1.0"),
+    ("msg", "you", "svc", "push branch, open PR"),
     ("msg", "svc", "rs", "pr.yml"),
     ("note", "rs", "unittest, docker build"),
     ("msg", "rs", "svc", "check ✓", True),
@@ -41,7 +42,8 @@ ROWS = [
     ("msg", "iam", "rs", "1 h credentials", True),
     ("msg", "rs", "ecr", "push :1.1.0"),
     ("phase", "3  infra-code: pull request", "purple"),
-    ("msg", "you", "inf", "branch: tag 1.0.0 → 1.1.0, open PR"),
+    ("note", "you", "edit k8s/deployment.yaml:\nimage tag 1.0.0 → 1.1.0"),
+    ("msg", "you", "inf", "push branch, open PR"),
     ("msg", "inf", "ri", "pr.yml"),
     ("msg", "ri", "iam", "assume role (OIDC)"),
     ("msg", "iam", "ri", "credentials", True),
@@ -99,7 +101,7 @@ BOTTOM = y + 30
 E.append({"type": "text", "id": "title", "x": 20, "y": 10, "fontSize": 26,
           "text": "One change, two pipelines: who talks to whom, in what order"})
 E.append({"type": "text", "id": "sub", "x": 20, "y": 48, "fontSize": 17, "strokeColor": "#757575",
-          "text": "solid: request or action  ·  dashed: response  ·  yellow: work on the runner or in the cluster"})
+          "text": "solid: request or action  ·  dashed: response  ·  yellow: work on your laptop, a runner or the cluster"})
 
 for k, (title, color, y1, y2) in enumerate(bands):
     rect(f"band{k}", 20, y1, WIDTH - 40, y2 - y1, color, opacity=25, stroke_width=1)
@@ -114,7 +116,7 @@ for k, label, color in COLS:
 for n, (row, y, h) in enumerate(placed):
     if row[0] == "note":
         _, who, text = row
-        rect(f"note{n}", min(X[who] - 95, WIDTH - 40 - 200), y + 4, 190, h - 8, "note", text, fs=16)
+        rect(f"note{n}", max(30, min(X[who] - 110, WIDTH - 40 - 230)), y + 4, 220, h - 8, "note", text, fs=16)
         continue
     _, a, b, text, *rest = row
     dashed = bool(rest and rest[0])
